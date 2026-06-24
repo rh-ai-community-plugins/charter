@@ -1,10 +1,10 @@
 # Red Hat AI Community Plugins Charter
 
-Welcome to the Red Hat AI Enterprise (RHAIE) Community Plugins initiative.
+Welcome to the Red Hat AI Community Plugins initiative.
 
 ## What is this?
 
-This repository contains the charter, guidelines, and catalog for community plugins that extend Red Hat AI Enterprise.
+This repository contains the charter, guidelines, and catalog for community plugins that extend Red Hat AI Enterprise (RHAIE).
 
 Community plugins enable high-velocity experimentation and innovation while keeping the core RHAIE platform stable and supported.
 
@@ -22,7 +22,7 @@ Community plugins enable high-velocity experimentation and innovation while keep
 ## Getting Started
 
 - **For plugin users**: Browse the catalog and talk to your RHAIE admin about enabling plugins
-- **For admins**: See installation guides in each plugin's repository  
+- **For admins**: See installation guides in each plugin's repository
 - **For plugin authors**: Read the [Charter](CHARTER.md) and watch for contribution guidelines
 
 ---
