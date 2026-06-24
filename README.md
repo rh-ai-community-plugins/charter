@@ -26,5 +26,3 @@ Community plugins enable high-velocity experimentation and innovation while keep
 - **For plugin authors**: Read the [Charter](CHARTER.md) and watch for contribution guidelines
 
 ---
-
-*This repo will be renamed to `charter` once initial setup is complete.*

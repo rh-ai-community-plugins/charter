@@ -194,7 +194,7 @@ Agreed structure:
 ```
 charter/
 ├── README.md (landing page)
-├── MANIFESTO.md (the philosophy doc) ✅ DONE
+├── CHARTER.md (the philosophy doc) ✅ DONE
 ├── CONTRIBUTING.md (how to submit a plugin)
 ├── plugins.yaml (the registry)
 ├── docs/
@@ -211,7 +211,7 @@ charter/
 └── site/ (generated GitHub Pages)
 ```
 
-## MANIFESTO.md
+## CHARTER.md
 
 **Status**: ✅ Completed and pushed to GitHub
 
