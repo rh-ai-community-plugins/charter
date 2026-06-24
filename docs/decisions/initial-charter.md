@@ -1,27 +1,26 @@
-# Community Plugins Project - Progress Notes
+# ADR: Initial Charter Decisions
 
-**Date**: 2026-06-24  
-**Participants**: Erwan Granger, Claude
+**Date**: 2026-06-24
+**Status**: Accepted
+
+This document records the founding decisions for the Red Hat AI Community Plugins initiative. It captures the rationale behind the project scope, technical standards, and governance model established in the [Charter](../../CHARTER.md).
+
+---
 
 ## Project Overview
 
-This repo will become the **charter** for Red Hat AI Enterprise (RHAIE) Community Plugins initiative. It contains documentation and a registry/catalog that lists available community plugins.
+The `charter` repo is the home for the Red Hat AI Enterprise (RHAIE) Community Plugins initiative. It contains documentation (charter, guidelines) and a registry/catalog that lists available community plugins.
 
 **Purpose**: Create a clear separation between stable, supported RHAIE core features and experimental, high-velocity community plugins. Plugins extend the RHAIE dashboard without destabilizing the core product.
 
 ## Key Decisions
 
 ### Repo Scope
-- **What this repo contains**: Documentation (manifesto, guidelines) + registry/catalog of plugins
-- **What lives elsewhere**: 
+- **What this repo contains**: Documentation (charter, guidelines) + registry/catalog of plugins
+- **What lives elsewhere**:
   - Technical integration layer (how plugins load) → RHAIE core product
   - Shared tooling (templates, CI scripts) → separate `plugin-template` repo
   - Individual plugins → their own repos in `rh-ai-community-plugins` org
-
-### Repo Naming
-- Current: `first-repo`
-- **Decided**: Rename to `charter`
-- URL will be: `github.com/rh-ai-community-plugins/charter`
 
 ### Registry Format
 **Decision**: Structured YAML + auto-generated GitHub Pages site
@@ -154,7 +153,7 @@ Examples:
 
 ## Pilot Plugins
 
-These will be the first batch to convert/validate the model:
+These are the first batch to validate the model:
 
 1. **Brewet** (formerly ODH TEC)
    - Repo: https://github.com/rh-aiservices-bu/odh-tec
@@ -188,90 +187,6 @@ These will be the first batch to convert/validate the model:
 - **External teams convert**: Hermes (aicatalyst-team), GPU Booking + Skills (rhai-code)
   - Provide them with documentation and reference implementations first
 
-## Charter Repo Structure
-
-Agreed structure:
-```
-charter/
-├── README.md (landing page)
-├── CHARTER.md (the philosophy doc) ✅ DONE
-├── CONTRIBUTING.md (how to submit a plugin)
-├── plugins.yaml (the registry)
-├── docs/
-│   ├── plugin-spec.md (plugin.yaml schema)
-│   ├── helm-requirements.md
-│   ├── security-guidelines.md
-│   └── examples/
-│       └── example-plugin.yaml
-├── .github/
-│   ├── workflows/
-│   │   └── validate-pr.yml
-│   └── PULL_REQUEST_TEMPLATE/
-│       └── add-plugin.md
-└── site/ (generated GitHub Pages)
-```
-
-## CHARTER.md
-
-**Status**: ✅ Completed and pushed to GitHub
-
-Covers 8 sections:
-1. Why This Exists - philosophy of core vs community separation
-2. Principles - velocity, community-driven, clean separation, safe removal, namespace isolation
-3. What Is a Community Plugin - 5 defining characteristics
-4. What Is NOT a Community Plugin - explicit boundaries
-5. Plugin Lifecycle - experimental → beta → stable-candidate → deprecated → archived
-6. Support Model - unsupported by Red Hat, maintainer-driven
-7. Governance - adding/removing plugins, conflict resolution
-8. Adoption Into Core - how plugins graduate (Kubernetes model)
-9. Technical Requirements - high-level overview
-
-Key changes made:
-- Changed all references from RHOAI to RHAIE
-- Added note: "RHAIE is the combination of Red Hat OpenShift AI and OpenShift"
-- Tone: practical engineer-to-engineer, 2 pages, scannable
-
-## Next Steps
-
-### Immediate (Not Yet Started)
-1. **Technical spec** (`docs/plugin-spec.md`)
-   - Define exact `plugin.yaml` schema
-   - Helm chart requirements
-   - RBAC patterns
-   - Dashboard integration contract
-
-2. **Repo scaffolding**
-   - Create directory structure
-   - Set up CI workflows
-   - PR templates
-   - GitHub Pages config
-
-3. **Registry file** (`plugins.yaml`)
-   - Define schema
-   - Add pilot plugins (or start empty)
-
-4. **Contributing guide** (`CONTRIBUTING.md`)
-   - Step-by-step submission process
-   - Quality checklist
-   - PR template usage
-
-### Medium-term
-5. **Pilot plugin conversion**
-   - Pick Brewet or Sardeenz
-   - Convert to validate the model
-   - Document conversion process
-   - Use as reference implementation
-
-6. **Dashboard integration**
-   - Meeting with dashboard specialist scheduled
-   - Discuss "hack" approach for demo
-   - Plan proper integration path
-
-### Deferred Decisions
-- Exact dashboard integration mechanism (waiting on specialist meeting)
-- How RHAIE dashboard discovers plugins at runtime (CRDs vs YAML fetch vs static)
-- Dashboard "hack" implementation for demos
-
 ## Tracking Metrics
 
 Internally, Red Hat will track:
@@ -281,10 +196,16 @@ Internally, Red Hat will track:
 
 Purpose: Inform decisions about which plugins to adopt into core product.
 
-## Important Notes
+## Key Rules
 
 - RHAIE = Red Hat AI Enterprise = Red Hat OpenShift AI + OpenShift
 - First-come, first-served for plugin names
 - 90-day deprecation notice required (unless security risk)
 - Red Hat can adopt plugins with maintainer agreement
 - Plugins remain in community catalog during core integration work
+
+## Deferred Decisions
+
+- Exact dashboard integration mechanism (waiting on specialist meeting)
+- How RHAIE dashboard discovers plugins at runtime (CRDs vs YAML fetch vs static)
+- Dashboard "hack" implementation for demos

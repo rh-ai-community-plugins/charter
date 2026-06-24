@@ -1,0 +1,66 @@
+# Red Hat AI Community Plugins Registry
+#
+# To add a plugin, open a PR adding an entry below.
+# See CONTRIBUTING.md for submission guidelines.
+# See docs/plugin-spec.md for the full plugin.yaml schema.
+
+plugins:
+  - name: brewet
+    description: Technical enablement catalog and demos
+    repo: https://github.com/rh-aiservices-bu/odh-tec
+    status: experimental
+    maintenance: red-hat
+    deployment_model: cluster-shared
+    rhaie_versions: []
+    maintainer: rh-aiservices-bu
+    last_updated: 2026-06-24
+
+  - name: sardeenz
+    description: Specialized visualization tools
+    repo: https://github.com/rh-aiservices-bu/sardeenz
+    status: experimental
+    maintenance: red-hat
+    deployment_model: cluster-shared
+    rhaie_versions: []
+    maintainer: rh-aiservices-bu
+    last_updated: 2026-06-24
+
+  - name: hermes
+    description: Deploy and configure Hermes Agent on OpenShift
+    repo: https://github.com/aicatalyst-team/hermes-openshift
+    status: experimental
+    maintenance: community
+    deployment_model: per-project
+    rhaie_versions: []
+    maintainer: aicatalyst-team
+    last_updated: 2026-06-24
+
+  - name: gpu-booking
+    description: GPU resource scheduling and calendar
+    repo: https://github.com/rhai-code/gpu-booking-app-plugin
+    status: experimental
+    maintenance: community
+    deployment_model: cluster-shared
+    rhaie_versions: []
+    maintainer: rhai-code
+    last_updated: 2026-06-24
+
+  - name: openshift-skills
+    description: AI-powered cluster operations
+    repo: https://github.com/rhai-code/rhai-openshift-skills-plugin
+    status: experimental
+    maintenance: community
+    deployment_model: per-project
+    rhaie_versions: []
+    maintainer: rhai-code
+    last_updated: 2026-06-24
+
+  - name: quickstart-launcher
+    description: One-click deployment of quickstart templates
+    repo: https://github.com/rh-ai-quickstart/quickstart-launcher
+    status: experimental
+    maintenance: red-hat
+    deployment_model: per-project
+    rhaie_versions: []
+    maintainer: rh-aiservices-bu
+    last_updated: 2026-06-24

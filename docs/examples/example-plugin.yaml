@@ -1,0 +1,67 @@
+# Example plugin.yaml — copy this as a starting point for your plugin.
+# See docs/plugin-spec.md for the full specification.
+
+# --- Required fields ---
+
+name: my-plugin
+version: 0.1.0
+description: A one-line description of what this plugin does
+
+maintainer:
+  name: Your Name
+  email: you@example.com
+  github: your-github-handle
+
+rhaie_compatibility:
+  min_version: "2.14"
+  tested_versions: ["2.14", "2.15"]
+
+image:
+  repository: quay.io/rh-ai-community-plugins/my-plugin
+  tag: "0.1.0"
+
+helm:
+  chart_path: chart/
+
+nav:
+  label: My Plugin
+  icon: puzzle-piece
+  url_pattern: /community/my-plugin
+
+# per-project: user provisions instances per namespace
+# cluster-shared: admin installs once, all authorized users share
+deployment_model: per-project
+
+rbac:
+  required_roles: []
+  # Set to true only if absolutely necessary — requires justification in PR
+  cluster_roles: false
+
+# --- Optional fields ---
+
+dependencies:
+  - name: postgresql
+    version: ">=14"
+    required: true
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+telemetry:
+  opt_in: true
+  metrics_endpoint: /metrics
+
+support:
+  docs: https://github.com/your-org/your-plugin/docs
+  issues: https://github.com/your-org/your-plugin/issues
+
+screenshots:
+  - path: docs/screenshots/overview.png
+    caption: Plugin overview page
+  - path: docs/screenshots/settings.png
+    caption: Configuration panel

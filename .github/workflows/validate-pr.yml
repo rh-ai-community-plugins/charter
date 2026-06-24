@@ -1,0 +1,86 @@
+name: Validate Plugin PR
+
+on:
+  pull_request:
+    paths:
+      - 'plugins.yaml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Validate YAML syntax
+        run: python3 -c "import yaml; yaml.safe_load(open('plugins.yaml'))"
+
+      - name: Validate required fields
+        run: |
+          python3 << 'EOF'
+          import yaml, sys
+
+          with open('plugins.yaml') as f:
+              data = yaml.safe_load(f)
+
+          required_fields = ['name', 'description', 'repo', 'status', 'maintenance',
+                             'deployment_model', 'maintainer', 'last_updated']
+          valid_statuses = ['experimental', 'beta', 'stable-candidate', 'deprecated', 'archived']
+          valid_maintenance = ['red-hat', 'community', 'archived']
+          valid_models = ['per-project', 'cluster-shared']
+
+          errors = []
+          for i, plugin in enumerate(data.get('plugins', [])):
+              prefix = f"Plugin #{i+1} ({plugin.get('name', 'unnamed')})"
+              for field in required_fields:
+                  if field not in plugin:
+                      errors.append(f"{prefix}: missing required field '{field}'")
+              if plugin.get('status') not in valid_statuses:
+                  errors.append(f"{prefix}: invalid status '{plugin.get('status')}' (must be one of {valid_statuses})")
+              if plugin.get('maintenance') not in valid_maintenance:
+                  errors.append(f"{prefix}: invalid maintenance '{plugin.get('maintenance')}' (must be one of {valid_maintenance})")
+              if plugin.get('deployment_model') not in valid_models:
+                  errors.append(f"{prefix}: invalid deployment_model '{plugin.get('deployment_model')}' (must be one of {valid_models})")
+
+          if errors:
+              print("Validation errors:")
+              for e in errors:
+                  print(f"  - {e}")
+              sys.exit(1)
+          else:
+              print(f"All {len(data.get('plugins', []))} plugins validated successfully.")
+          EOF
+
+      - name: Check repo links
+        run: |
+          python3 << 'EOF'
+          import yaml, urllib.request, sys
+
+          with open('plugins.yaml') as f:
+              data = yaml.safe_load(f)
+
+          errors = []
+          for plugin in data.get('plugins', []):
+              repo = plugin.get('repo', '')
+              try:
+                  req = urllib.request.Request(repo, method='HEAD')
+                  resp = urllib.request.urlopen(req, timeout=10)
+                  if resp.status >= 400:
+                      errors.append(f"{plugin['name']}: repo {repo} returned HTTP {resp.status}")
+              except Exception as e:
+                  errors.append(f"{plugin['name']}: repo {repo} is not accessible ({e})")
+
+          if errors:
+              print("Link check warnings (non-blocking):")
+              for e in errors:
+                  print(f"  - {e}")
+          else:
+              print("All repo links accessible.")
+          EOF

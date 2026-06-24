@@ -146,13 +146,13 @@ All plugins must:
 5. **Declare RBAC requirements** - What permissions the plugin needs
 6. **Support clean removal** - Uninstalling the Helm release removes all resources
 
-See `docs/plugin-spec.md` for detailed technical requirements.
+See [Plugin Specification](docs/plugin-spec.md) for detailed technical requirements.
 
 ## Getting Started
 
 - **For plugin users**: Browse the catalog, talk to your admin about enabling plugins
 - **For admins**: See installation guides in each plugin's repository
-- **For plugin authors**: Read `CONTRIBUTING.md` to submit your plugin
+- **For plugin authors**: Read [CONTRIBUTING.md](CONTRIBUTING.md) to submit your plugin
 
 Questions? Open an issue in this repository or join the community discussion.
 
