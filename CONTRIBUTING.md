@@ -6,7 +6,7 @@ Anyone can submit a plugin to the catalog: Red Hat engineers, partners, or indiv
 
 Read the [Charter](CHARTER.md) to understand what community plugins are (and aren't). Your plugin must:
 
-- Be open source (Apache-2.0 or MIT)
+- Be open source under an OSI-approved permissive license (Apache-2.0 or MIT recommended — other permissive licenses may be accepted on a case-by-case basis)
 - Deploy via Helm chart
 - Be completely removable without affecting RHAIE core
 - Include a README with screenshots and installation guide
@@ -31,7 +31,7 @@ See [Plugin Specification — Repository Structure](docs/plugin-spec.md#reposito
     repo: https://github.com/your-org/your-plugin
     status: experimental
     maintenance: community
-    deployment_model: per-project  # or cluster-shared
+    deployment_model: per-project  # per-project, cluster-shared, or both
     rhaie_versions: ["2.14"]       # required — at least one tested RHAIE version
     maintainer: your-github-handle
     last_updated: 2026-06-24
@@ -57,7 +57,7 @@ New plugins start as **Experimental**. You can request a status change via PR. S
 
 Maintainers can archive their plugin anytime by opening a PR to change the status to `deprecated` (then `archived` after 90 days).
 
-Red Hat may remove plugins that violate security policies, impersonate core features, are abandoned (no maintainer response for 6+ months), or create legal issues.
+Red Hat may remove plugins that violate security policies, impersonate core features, are abandoned (maintainer stops responding to issues and PRs for 6+ months), or create legal issues.
 
 ## Support Model
 

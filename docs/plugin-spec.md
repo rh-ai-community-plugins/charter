@@ -1,6 +1,6 @@
 # Plugin Specification
 
-This document defines the technical requirements for building a community plugin for Red Hat AI Enterprise (RHAIE).
+This document defines the technical requirements for building a community plugin for Red Hat AI Enterprise (RHAIE). Every plugin must have a visible UI presence in the RHAIE dashboard — backend-only services are out of scope.
 
 ## plugin.yaml Schema
 
@@ -30,7 +30,7 @@ nav:
   icon: puzzle-piece
   url_pattern: /community/my-plugin
 
-deployment_model: per-project  # or cluster-shared
+deployment_model: per-project  # per-project, cluster-shared, or both
 
 rbac:
   required_roles: []
@@ -69,7 +69,7 @@ screenshots:
 
 ## Deployment Models
 
-Plugins declare their deployment model in `plugin.yaml`. This determines how the plugin is installed and who can use it.
+Plugins declare their deployment model in `plugin.yaml`. A plugin can support one or both models — if both are supported, the admin or user chooses which to use at install time.
 
 ### Per-Project (`per-project`)
 
@@ -91,7 +91,11 @@ Admin runs Helm install once. The plugin appears in the left nav for all authori
 **Characteristics**:
 - Runs in dedicated `rhaie-community-plugins` namespace
 - Admin provisions once, users share
-- Plugin handles its own multi-tenancy
+- Multi-tenancy approach is up to the plugin author (TBD — best practices will be defined as the ecosystem matures)
+
+### Both (`both`)
+
+Plugin supports either deployment model. The Helm chart accepts a value to switch between per-project and cluster-shared modes. Use this when the plugin can reasonably work both ways.
 
 ## Repository Structure
 
@@ -157,7 +161,7 @@ Access control uses OpenShift RBAC:
 1. Admin installs the plugin cluster-wide (or user installs per-project)
 2. Admin grants access to specific users/groups
 3. Dashboard filters left nav based on user's permissions
-4. Plugins handle their own multi-tenancy if cluster-shared
+4. For cluster-shared plugins, multi-tenancy is the plugin author's responsibility — the approach is not prescribed
 
 ## Plugin Lifecycle
 
@@ -165,7 +169,7 @@ See the [Charter — Plugin Lifecycle](../CHARTER.md#plugin-lifecycle) for the f
 
 ## Forward Compatibility
 
-See the [Charter — Forward Compatibility](../CHARTER.md#forward-compatibility) for the full policy on RC access, breaking change notices, and author responsibilities.
+Plugins declare which RHAIE versions they have been tested against. Authors are responsible for testing against new releases and updating `rhaie_compatibility.tested_versions`. See the [Charter — Forward Compatibility](../CHARTER.md#forward-compatibility) for more detail.
 
 ### CI Validation (Recommended)
 
@@ -177,8 +181,6 @@ for version in $(yq '.rhaie_compatibility.tested_versions[]' plugin.yaml); do
   helm template . | oc apply --dry-run=client -f -
 done
 ```
-
-A reusable GitHub Actions workflow for multi-version testing will be provided in this repository.
 
 ## What Plugins Cannot Do
 

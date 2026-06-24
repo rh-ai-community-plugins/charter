@@ -30,6 +30,7 @@ nav:
 
 # per-project: user provisions instances per namespace
 # cluster-shared: admin installs once, all authorized users share
+# both: plugin supports either mode (Helm values switch between them)
 deployment_model: per-project
 
 rbac:

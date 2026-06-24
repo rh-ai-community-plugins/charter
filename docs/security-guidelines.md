@@ -23,7 +23,7 @@ Community plugins run alongside RHAIE core. These rules protect the platform and
 
 - Declare all required permissions in `plugin.yaml`. Undeclared permissions will be denied.
 - No ClusterRole bindings unless explicitly justified in the PR description. Expect pushback.
-- Admin reviews all RBAC requirements before approving a plugin.
+- Charter maintainers review all RBAC requirements before approving a plugin.
 - Plugins that request excessive permissions will be rejected.
 
 ## Data Access

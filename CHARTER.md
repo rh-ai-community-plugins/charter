@@ -27,12 +27,14 @@ Community Plugins let us deliver the speed AI demands while protecting the stabi
 
 ## What Is a Community Plugin?
 
-A community plugin is a dashboard extension that:
+A community plugin is a dashboard extension with a visible UI presence in RHAIE. Every plugin must render something in the dashboard — backend-only services without a UI are out of scope.
 
-1. **Integrates cleanly** - Appears in the RHAIE dashboard left navigation menu with a clear "Community Plugin" tag
+A community plugin:
+
+1. **Integrates cleanly** - Appears in the RHAIE dashboard with a clear "Community Plugin" tag. The exact dashboard integration mechanism is TBD and will be defined with the RHAIE dashboard team.
 2. **Respects RBAC** - Admins can control which users/groups see which plugins
 3. **Deploys via Helm** - Standard installation, upgrade, and removal
-4. **Declares its scope** - Either per-project (user provisions instances) or cluster-shared (admin provisions once, users share)
+4. **Declares its scope** - Per-project, cluster-shared, or both. A single plugin can support both deployment models, letting admins and users choose what fits their needs.
 5. **Is self-contained** - Can be completely removed without affecting core RHAIE
 
 ### Examples of Community Plugins candidates
@@ -68,7 +70,7 @@ New plugins start here. Expect breaking changes, incomplete features, possible d
 Stabilizing. API may still change, but maintainers commit to migration paths. Suitable for non-critical workloads.
 
 ### Stable-Candidate
-Under consideration for becoming part of the core product. Maintainers commit to backward compatibility and deprecation notices. Suitable for critical workloads if you accept the community support model.
+Mature and reliable. Maintainers commit to backward compatibility and deprecation notices. Suitable for critical workloads if you accept the community support model. Adoption into RHAIE core is possible but rare — this status primarily signals maturity, not a pipeline to product inclusion.
 
 ### Deprecated
 No longer recommended. Security fixes only. Maintainers must give 90 days notice before moving to archived.
@@ -108,7 +110,7 @@ Maintainers can archive their plugin anytime. Red Hat can remove plugins that:
 
 - Violate security policies
 - Impersonate core features
-- Are abandoned (no maintainer response for 6+ months)
+- Are abandoned (maintainer stops responding to issues and PRs for 6+ months)
 - Create legal or compliance issues
 
 Removed plugins get 90-day deprecation notice unless they pose immediate security risk.
@@ -124,14 +126,16 @@ If technical conflicts arise (port collisions, resource names, etc.), later plug
 
 ## Adoption Into Core
 
-Red Hat may adopt community plugins into the core product. This requires:
+In rare cases, Red Hat may adopt a community plugin into the core product. This is not the expected path — most plugins will remain community-maintained indefinitely. The lifecycle states signal maturity, not a queue for product inclusion.
+
+Adoption, when it happens, requires:
 
 - Maintainer agreement
 - Code/license review and transfer
 - Red Hat QE validation
 - Full support commitment from Red Hat engineering
 
-Adoption follows the Kubernetes graduation model: incubating → graduated. Plugins don't disappear from the community catalog when adopted; they remain available while the core integration is built.
+Plugins don't disappear from the community catalog when adopted; they remain available while the core integration is built.
 
 Internally, Red Hat tracks plugin adoption metrics to inform these decisions.
 
@@ -151,21 +155,15 @@ See [Plugin Specification](docs/plugin-spec.md) for detailed technical requireme
 
 ## Forward Compatibility
 
-Plugin authors need to know if a future RHAIE release will break their plugin before it ships, not after.
+At this stage, plugins declare which RHAIE versions they have been tested against. Authors are responsible for testing against new RHAIE releases and updating their `rhaie_compatibility.tested_versions` field.
 
-**What Red Hat will provide:**
+As the ecosystem matures, Red Hat may provide RC access, breaking change notices, and CI test templates — but those are future goals, not current commitments.
 
-- **Release candidate access**: Plugin authors will be notified when RHAIE release candidates are available for testing
-- **Breaking change notices**: RHAIE releases that change plugin-facing APIs or dashboard integration points will include a migration guide
-- **CI test templates**: Reusable GitHub Actions workflows that plugin authors can adopt to run their Helm chart validation against multiple RHAIE versions
+## Vision: In-Product Plugin Catalog
 
-**What plugin authors are responsible for:**
+The long-term goal is an in-product catalog where RHAIE users can discover, browse, and install community plugins directly from the dashboard — similar to an app marketplace. Admins would manage available plugins; users would provision per-project instances with a click.
 
-- Testing their plugin against RHAIE release candidates when notified
-- Updating `rhaie_compatibility.tested_versions` in their `plugin.yaml` after successful validation
-- Responding to breaking change notices within 30 days (or risk being flagged as potentially incompatible in the catalog)
-
-This is an evolving capability. The initial catalog will rely on manual testing and community reporting. Automated CI integration against RHAIE release candidates is a goal, not yet a guarantee.
+The initial implementation will rely on the `plugins.yaml` registry in this repo and manual Helm-based installation. The in-product catalog is a future milestone that depends on dashboard integration work with the RHAIE team.
 
 ## Getting Started
 

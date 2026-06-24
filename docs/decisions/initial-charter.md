@@ -43,12 +43,21 @@ Dashboard integration mechanism to be discussed with dashboard specialist later.
 - Experiments (new notebook types, custom accelerators)
 - Vendor plugins (W&B, MLflow UI)
 - Utilities (cost calculators, resource cleaners)
-- Dashboard extensions only - no operators, no cluster-level changes without admin approval
+- Dashboard extensions only — every plugin must have a visible UI. No operators, no cluster-level changes without admin approval
+
+## Audience & Framing
+
+This charter is primarily a leadership proposal — designed to get formal backing and resources from Red Hat leadership. Once approved, it becomes the contributor-facing governance document.
+
+**Success criteria (6-month horizon)**:
+- Leadership approval and formal backing
+- 3+ community plugins live and usable on a real RHAIE instance
+- Compelling demo at a Red Hat event or customer meeting
 
 ## Acceptance Criteria
 
 ### Required
-- Open source (Apache-2.0/MIT)
+- Open source under an OSI-approved permissive license (Apache-2.0/MIT recommended)
 - Basic docs (README with screenshots + install YAML)
 - Declared RHAIE version compatibility
 - Maintainer contact
@@ -85,7 +94,7 @@ Example:
 - Admin installs plugin cluster-wide
 - Grants access to specific users/groups
 - Dashboard filters left nav based on user's permissions
-- Plugins handle their own multi-tenancy (shared vs per-user instances)
+- Plugins handle their own multi-tenancy (approach TBD — not prescribed; best practices will emerge as the ecosystem matures)
 
 ### Contribution Workflow
 **Decision**: Self-service PR with approval
@@ -132,7 +141,9 @@ plugin-repo/
 ### Deployment Model
 **Decision**: Plugin declares its deployment model in `plugin.yaml`
 
-Field: `deployment_model: per-project | cluster-shared`
+Field: `deployment_model: per-project | cluster-shared | both`
+
+A single plugin can support both models. When set to `both`, the Helm chart accepts a value to switch modes.
 
 - **Per-project plugins**: User clicks "Add to project" → dashboard triggers Helm install into user's namespace
 - **Cluster-shared plugins**: Admin runs Helm install once → plugin appears in left nav for authorized users
@@ -204,8 +215,24 @@ Purpose: Inform decisions about which plugins to adopt into core product.
 - Red Hat can adopt plugins with maintainer agreement
 - Plugins remain in community catalog during core integration work
 
+## Decisions from Charter Review (2026-06-24)
+
+- **UI requirement**: Every plugin must have a visible dashboard presence. Backend-only services are out of scope.
+- **Abandonment**: Defined as maintainer non-responsiveness to issues/PRs for 6+ months (not commit inactivity).
+- **Graduation to core**: Possible but rare. Lifecycle states signal maturity, not a pipeline to product inclusion.
+- **Forward compatibility**: No commitments from RHAIE team yet. Plugins declare tested versions; RC access and CI templates are future goals.
+- **Licensing**: Apache-2.0/MIT recommended, but open to other OSI-approved permissive licenses.
+- **Dual deployment**: A plugin can support both per-project and cluster-shared modes.
+- **Multi-tenancy**: No prescribed approach for cluster-shared plugins — left to plugin authors.
+- **Security review**: Charter maintainers review RBAC justifications, not a formal security team.
+- **Quay org**: `quay.io/rh-ai-community-plugins` exists and is controlled by the initiative owner.
+- **Marketplace vision**: Long-term goal is an in-product catalog for plugin discovery and installation.
+- **Initiative ownership**: Driven by Erwan Granger / Customer Adoption and Innovation team. Not co-owned with RHAIE product team.
+- **Demo approach**: Standalone demo cluster with plugins installed. Dashboard integration can be hacked (iframe or DevTools) if needed.
+
 ## Deferred Decisions
 
-- Exact dashboard integration mechanism (waiting on specialist meeting)
+- Exact dashboard integration mechanism (TBD with RHAIE dashboard team)
 - How RHAIE dashboard discovers plugins at runtime (CRDs vs YAML fetch vs static)
-- Dashboard "hack" implementation for demos
+- Multi-tenancy best practices for cluster-shared plugins
+- In-product plugin catalog UX
