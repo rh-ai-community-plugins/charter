@@ -4,6 +4,8 @@
 
 AI moves fast. Enterprise platforms need stability. These forces create tension.
 
+![Velocity and Stability Diagram](velocity-stability-diagram.svg)
+
 Red Hat AI Enterprise (RHAIE) solves this by separating concerns:
 
 - **Core product**: Stable AI platform primitives with support SLAs. Workbenches, pipelines, model serving, MaaS, and so on. The foundation Red Hat supports, tests, document and maintains.
