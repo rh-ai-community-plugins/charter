@@ -161,25 +161,11 @@ Access control uses OpenShift RBAC:
 
 ## Plugin Lifecycle
 
-Plugins progress through these states:
-
-| State | Meaning | Stability Guarantee |
-|-------|---------|-------------------|
-| **Experimental** | New. Use at your own risk | None. Breaking changes expected |
-| **Beta** | Stabilizing | Migration paths for breaking changes |
-| **Stable-Candidate** | Under consideration for core adoption | Backward compatibility, deprecation notices |
-| **Deprecated** | No longer recommended | Security fixes only. 90-day notice before archival |
-| **Archived** | No longer maintained | None. Not installable |
-
-To change status, open a PR updating your entry in `plugins.yaml`.
+See the [Charter — Plugin Lifecycle](../CHARTER.md#plugin-lifecycle) for the full progression and stability guarantees. To change status, open a PR updating your entry in `plugins.yaml`.
 
 ## Forward Compatibility
 
-Plugin authors are responsible for maintaining compatibility with RHAIE releases. To make this practical:
-
-1. **Declare what you've tested**: Keep `rhaie_compatibility.tested_versions` current. This is what users rely on to know if your plugin works with their cluster.
-2. **Watch for RC notifications**: When RHAIE release candidates are available, test your plugin and update `tested_versions` before GA.
-3. **Respond to breaking change notices**: If a RHAIE release includes plugin-facing changes, update your plugin within 30 days or it may be flagged as potentially incompatible in the catalog.
+See the [Charter — Forward Compatibility](../CHARTER.md#forward-compatibility) for the full policy on RC access, breaking change notices, and author responsibilities.
 
 ### CI Validation (Recommended)
 
@@ -196,9 +182,4 @@ A reusable GitHub Actions workflow for multi-version testing will be provided in
 
 ## What Plugins Cannot Do
 
-- Replace or override core RHAIE features
-- Require cluster-admin privileges for users (admins install, users use)
-- Access RHAIE's internal databases or APIs directly
-- Modify other users' projects or data
-- Run privileged containers or bypass security policies
-- Create dependencies that break core features if removed
+See the [Charter — What Is NOT a Community Plugin](../CHARTER.md#what-is-not-a-community-plugin) for the full list of restrictions.

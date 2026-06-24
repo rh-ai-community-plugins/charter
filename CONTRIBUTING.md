@@ -17,25 +17,7 @@ See [docs/plugin-spec.md](docs/plugin-spec.md) for the full technical specificat
 
 ## Plugin Repository Structure
 
-Your plugin repo must follow this structure:
-
-```
-your-plugin/
-├── plugin.yaml           # Metadata: name, icon, description, nav config
-├── chart/                # Helm chart
-│   ├── Chart.yaml
-│   ├── values.yaml
-│   └── templates/
-├── deploy/
-│   ├── instance.yaml     # What gets created when user "adds" plugin
-│   └── rbac.yaml         # Permissions plugin needs
-├── docs/
-│   ├── README.md
-│   └── screenshots/
-└── src/                  # Plugin UI code if applicable
-```
-
-See [docs/examples/example-plugin.yaml](docs/examples/example-plugin.yaml) for a complete `plugin.yaml` template.
+See [Plugin Specification — Repository Structure](docs/plugin-spec.md#repository-structure) for the required layout and [docs/examples/example-plugin.yaml](docs/examples/example-plugin.yaml) for a complete `plugin.yaml` template.
 
 ## Submission Process
 
@@ -69,15 +51,7 @@ See [docs/examples/example-plugin.yaml](docs/examples/example-plugin.yaml) for a
 
 ## Plugin Lifecycle
 
-New plugins start as **Experimental**. You can request a status change via PR:
-
-| Status | Meaning |
-|--------|---------|
-| **Experimental** | New. Expect breaking changes, possible deprecation |
-| **Beta** | Stabilizing. Migration paths for breaking changes |
-| **Stable-Candidate** | Under consideration for core adoption. Backward compatible |
-| **Deprecated** | No longer recommended. Security fixes only. 90-day notice before archival |
-| **Archived** | No longer maintained. Not installable |
+New plugins start as **Experimental**. You can request a status change via PR. See the [Charter — Plugin Lifecycle](CHARTER.md#plugin-lifecycle) for the full progression (Experimental → Beta → Stable-Candidate → Deprecated → Archived).
 
 ## Removing Your Plugin
 

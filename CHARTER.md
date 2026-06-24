@@ -4,7 +4,7 @@
 
 AI moves fast. Enterprise platforms need stability. These forces create tension.
 
-![Velocity and Stability Diagram](velocity-stability-diagram.svg)
+![Velocity and Stability Diagram](images/velocity-stability-diagram.svg)
 
 Red Hat AI Enterprise (RHAIE) solves this by separating concerns:
 
