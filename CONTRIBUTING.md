@@ -50,10 +50,12 @@ See [docs/examples/example-plugin.yaml](docs/examples/example-plugin.yaml) for a
     status: experimental
     maintenance: community
     deployment_model: per-project  # or cluster-shared
-    rhaie_versions: []
+    rhaie_versions: ["2.14"]       # required — at least one tested RHAIE version
     maintainer: your-github-handle
     last_updated: 2026-06-24
 ```
+
+> **Note**: `rhaie_versions` must not be empty. Declare at least one RHAIE version your plugin has been tested against. This must match the `rhaie_compatibility.tested_versions` field in your plugin's own `plugin.yaml`. CI will reject PRs with empty version declarations.
 
 4. **Open a pull request** using the PR template
 5. **Wait for review** — CI validates your entry, then the Red Hat team reviews for policy compliance

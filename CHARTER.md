@@ -83,7 +83,7 @@ No longer maintained. Remains in catalog for historical reference but is not ins
 - Users file issues in the plugin's GitHub repository
 - Plugin maintainers decide response times and fix priorities
 - Red Hat may track adoption metrics internally but provides no SLAs
-- Plugins may break with RHAIE upgrades; maintainers are responsible for compatibility
+- Plugins must declare which RHAIE versions they support via `rhaie_compatibility` in their `plugin.yaml`. Plugins may break with RHAIE upgrades; maintainers are responsible for testing and updating compatibility declarations
 - Use community forums, Slack channels, or plugin-specific support channels
 
 If you need Red Hat support, use core RHAIE features only.
@@ -143,10 +143,29 @@ All plugins must:
 2. **Deploy via Helm chart** - Standard installation method, no custom scripts or Makefiles
 3. **Follow OpenShift best practices** - Non-root containers (UID 1001+), UBI9 base images preferred
 4. **Include documentation** - README with screenshots, installation guide, RHAIE version compatibility
-5. **Declare RBAC requirements** - What permissions the plugin needs
-6. **Support clean removal** - Uninstalling the Helm release removes all resources
+5. **Declare RHAIE version compatibility** - Which versions the plugin has been tested against (see [`rhaie_compatibility`](docs/plugin-spec.md#required-fields) in the plugin spec). Plugins with no declared compatibility will not be accepted.
+6. **Declare RBAC requirements** - What permissions the plugin needs
+7. **Support clean removal** - Uninstalling the Helm release removes all resources
 
 See [Plugin Specification](docs/plugin-spec.md) for detailed technical requirements.
+
+## Forward Compatibility
+
+Plugin authors need to know if a future RHAIE release will break their plugin before it ships, not after.
+
+**What Red Hat will provide:**
+
+- **Release candidate access**: Plugin authors will be notified when RHAIE release candidates are available for testing
+- **Breaking change notices**: RHAIE releases that change plugin-facing APIs or dashboard integration points will include a migration guide
+- **CI test templates**: Reusable GitHub Actions workflows that plugin authors can adopt to run their Helm chart validation against multiple RHAIE versions
+
+**What plugin authors are responsible for:**
+
+- Testing their plugin against RHAIE release candidates when notified
+- Updating `rhaie_compatibility.tested_versions` in their `plugin.yaml` after successful validation
+- Responding to breaking change notices within 30 days (or risk being flagged as potentially incompatible in the catalog)
+
+This is an evolving capability. The initial catalog will rely on manual testing and community reporting. Automated CI integration against RHAIE release candidates is a goal, not yet a guarantee.
 
 ## Getting Started
 

@@ -173,6 +173,27 @@ Plugins progress through these states:
 
 To change status, open a PR updating your entry in `plugins.yaml`.
 
+## Forward Compatibility
+
+Plugin authors are responsible for maintaining compatibility with RHAIE releases. To make this practical:
+
+1. **Declare what you've tested**: Keep `rhaie_compatibility.tested_versions` current. This is what users rely on to know if your plugin works with their cluster.
+2. **Watch for RC notifications**: When RHAIE release candidates are available, test your plugin and update `tested_versions` before GA.
+3. **Respond to breaking change notices**: If a RHAIE release includes plugin-facing changes, update your plugin within 30 days or it may be flagged as potentially incompatible in the catalog.
+
+### CI Validation (Recommended)
+
+Add this to your plugin's CI to validate against declared RHAIE versions:
+
+```bash
+# For each declared version, verify Helm chart renders cleanly
+for version in $(yq '.rhaie_compatibility.tested_versions[]' plugin.yaml); do
+  helm template . | oc apply --dry-run=client -f -
+done
+```
+
+A reusable GitHub Actions workflow for multi-version testing will be provided in this repository.
+
 ## What Plugins Cannot Do
 
 - Replace or override core RHAIE features

@@ -9,7 +9,8 @@
 - [ ] Added entry to `plugins.yaml` with all required fields
 - [ ] Plugin repo has required structure (`plugin.yaml`, `chart/`, `docs/`)
 - [ ] README exists with screenshots and installation guide
-- [ ] RHAIE version compatibility declared in `plugin.yaml`
+- [ ] RHAIE version compatibility declared in `plugin.yaml` (`rhaie_compatibility.tested_versions` is non-empty)
+- [ ] `rhaie_versions` in `plugins.yaml` matches `tested_versions` in `plugin.yaml`
 - [ ] Helm chart included and `helm template` succeeds
 - [ ] RBAC requirements declared in `plugin.yaml`
 - [ ] Maintainer contact provided

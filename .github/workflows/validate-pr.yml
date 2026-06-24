@@ -31,7 +31,7 @@ jobs:
               data = yaml.safe_load(f)
 
           required_fields = ['name', 'description', 'repo', 'status', 'maintenance',
-                             'deployment_model', 'maintainer', 'last_updated']
+                             'deployment_model', 'rhaie_versions', 'maintainer', 'last_updated']
           valid_statuses = ['experimental', 'beta', 'stable-candidate', 'deprecated', 'archived']
           valid_maintenance = ['red-hat', 'community', 'archived']
           valid_models = ['per-project', 'cluster-shared']
@@ -48,6 +48,9 @@ jobs:
                   errors.append(f"{prefix}: invalid maintenance '{plugin.get('maintenance')}' (must be one of {valid_maintenance})")
               if plugin.get('deployment_model') not in valid_models:
                   errors.append(f"{prefix}: invalid deployment_model '{plugin.get('deployment_model')}' (must be one of {valid_models})")
+              versions = plugin.get('rhaie_versions', [])
+              if not versions or (isinstance(versions, list) and len(versions) == 0):
+                  errors.append(f"{prefix}: rhaie_versions must not be empty — declare at least one tested RHAIE version")
 
           if errors:
               print("Validation errors:")
