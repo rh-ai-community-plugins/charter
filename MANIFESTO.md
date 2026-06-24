@@ -6,18 +6,16 @@ AI moves fast. Enterprise platforms need stability. These forces create tension.
 
 Red Hat AI Enterprise (RHAIE) solves this by separating concerns:
 
-- **Core product**: Stable ML platform primitives with support SLAs. Workbenches, pipelines, model serving, data science projects. The foundation Red Hat supports and maintains.
-- **Community plugins**: Everything else. Integrations, experiments, vendor tools, utilities. High velocity, short-lived when needed, no support burden on the core.
+- **Core product**: Stable AI platform primitives with support SLAs. Workbenches, pipelines, model serving, MaaS, and so on. The foundation Red Hat supports, tests, document and maintains.
+- **Community plugins**: Everything else. Integrations, experiments, utilities, prototypes. High velocity, short-lived when needed, no support burden on the core.
 
-Community plugins let us deliver the speed AI demands while protecting the stability enterprises require. They extend RHAIE without destabilizing it.
-
-> **Note**: Red Hat AI Enterprise (RHAIE) is the combination of Red Hat OpenShift AI and OpenShift platform capabilities.
+Community Plugins let us deliver the speed AI demands while protecting the stability enterprises require. They extend RHAIE without destabilizing it.
 
 ## Principles
 
 **Velocity over perfection.** Plugins can be experimental, exploratory, even temporary. If something stops being useful, it can be deprecated cleanly.
 
-**Community-driven.** Anyone can contribute a plugin: Red Hat engineers, partners, individuals. The barrier to entry is low. Quality comes from transparency and user choice, not gatekeeping.
+**Community-driven.** Anyone can contribute a plugin: Red Hat engineers, partners, individuals. The barrier to entry is low. Quality comes from transparency and user choice.
 
 **Clean separation.** Plugins are clearly marked in the dashboard. Users know what's supported and what isn't. Admins can enable/disable plugins without touching core functionality.
 
@@ -29,17 +27,17 @@ Community plugins let us deliver the speed AI demands while protecting the stabi
 
 A community plugin is a dashboard extension that:
 
-1. **Integrates cleanly** - Appears in the RHAIE dashboard left nav with a clear "Community Plugin" tag
-2. **Respects RBAC** - Admins control which users/groups see which plugins
+1. **Integrates cleanly** - Appears in the RHAIE dashboard left navigation menu with a clear "Community Plugin" tag
+2. **Respects RBAC** - Admins can control which users/groups see which plugins
 3. **Deploys via Helm** - Standard installation, upgrade, and removal
 4. **Declares its scope** - Either per-project (user provisions instances) or cluster-shared (admin provisions once, users share)
 5. **Is self-contained** - Can be completely removed without affecting core RHAIE
 
-### Examples of Community Plugins
+### Examples of Community Plugins candidates
 
-- **Brewet** (ODH TEC): Technical enablement catalog and demos
+- **Brewet** (formerly ODH TEC): Technical enablement catalog and demos
 - **Sardeenz**: Specialized visualization tools
-- **Hermes**: OpenShift integration utilities  
+- **Hermes**: A way to deploy and configure an instance of Hermes Agent on OpenShift
 - **GPU Booking App**: Resource scheduling and calendar
 - **OpenShift Skills**: AI-powered cluster operations
 - **Quickstart Launcher**: One-click deployment of quickstart templates
@@ -67,8 +65,8 @@ New plugins start here. Expect breaking changes, incomplete features, possible d
 ### Beta
 Stabilizing. API may still change, but maintainers commit to migration paths. Suitable for non-critical workloads.
 
-### Stable
-Production-ready. Maintainers commit to backward compatibility and deprecation notices. Suitable for critical workloads if you accept the community support model.
+### Stable-Candidate
+Under consideration for becoming part of the core product. Maintainers commit to backward compatibility and deprecation notices. Suitable for critical workloads if you accept the community support model.
 
 ### Deprecated
 No longer recommended. Security fixes only. Maintainers must give 90 days notice before moving to archived.
