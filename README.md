@@ -8,6 +8,14 @@ This repository contains the charter, guidelines, and catalog for community plug
 
 Community plugins enable high-velocity experimentation and innovation while keeping the core RHAIE platform stable and supported.
 
+## Screenshots
+
+Community plugins appear in the RHAIE dashboard sidebar, clearly tagged to distinguish them from core features.
+
+![Community plugins in the dashboard sidebar](images/community-plugins-sidebar.png)
+
+![Full dashboard view with community plugins](images/dashboard-full.png)
+
 ## Documentation
 
 - **[Charter](CHARTER.md)** - Read the full charter to understand the philosophy, principles, and governance of community plugins
