@@ -32,12 +32,12 @@ See [Plugin Specification — Repository Structure](docs/plugin-spec.md#reposito
     status: experimental
     maintenance: community
     deployment_model: per-project  # per-project, cluster-shared, or both
-    rhaie_versions: ["2.14"]       # required — at least one tested RHAIE version
+    rhoai_versions: ["3.4.0"]      # required — at least one tested RHOAI version
     maintainer: your-github-handle
     last_updated: 2026-06-24
 ```
 
-> **Note**: `rhaie_versions` must not be empty. Declare at least one RHAIE version your plugin has been tested against. This must match the `rhaie_compatibility.tested_versions` field in your plugin's own `plugin.yaml`. CI will reject PRs with empty version declarations.
+> **Note**: `rhoai_versions` must not be empty. Declare at least one RHOAI version your plugin has been tested against. This must match the `rhoai_compatibility.tested_versions` field in your plugin's own `plugin.yaml`. CI will reject PRs with empty version declarations.
 
 4. **Open a pull request** using the PR template
 5. **Wait for review** — CI validates your entry, then the Red Hat team reviews for policy compliance

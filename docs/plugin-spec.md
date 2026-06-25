@@ -18,9 +18,9 @@ maintainer:
   email: you@example.com
   github: your-github-handle
 
-rhaie_compatibility:
-  min_version: "2.14"
-  tested_versions: ["2.14", "2.15"]
+rhoai_compatibility:
+  min_version: "3.4.0"
+  tested_versions: ["3.4.0"]
 
 helm:
   chart_path: chart/
@@ -89,7 +89,7 @@ Admin runs Helm install once. The plugin appears in the left nav for all authori
 **Examples**: Brewet, GPU Booking, LibreChat
 
 **Characteristics**:
-- Runs in dedicated `rhaie-community-plugins` namespace
+- Runs in dedicated `rhoai-community-plugins` namespace
 - Admin provisions once, users share
 - Multi-tenancy approach is up to the plugin author (TBD — best practices will be defined as the ecosystem matures)
 
@@ -143,7 +143,7 @@ quay.io/rh-ai-community-plugins/<your-plugin-name>:<version>
 
 ### Namespace Isolation
 - Per-project plugins run in the user's namespace
-- Cluster-shared plugins run in `rhaie-community-plugins` namespace with minimal RBAC
+- Cluster-shared plugins run in `rhoai-community-plugins` namespace with minimal RBAC
 - Plugins cannot access RHAIE internal databases or APIs directly
 
 ### RBAC
@@ -169,7 +169,7 @@ See the [Charter — Plugin Lifecycle](../CHARTER.md#plugin-lifecycle) for the f
 
 ## Forward Compatibility
 
-Plugins declare which RHAIE versions they have been tested against. Authors are responsible for testing against new releases and updating `rhaie_compatibility.tested_versions`. See the [Charter — Forward Compatibility](../CHARTER.md#forward-compatibility) for more detail.
+Plugins declare which RHOAI versions they have been tested against. Authors are responsible for testing against new releases and updating `rhoai_compatibility.tested_versions`. See the [Charter — Forward Compatibility](../CHARTER.md#forward-compatibility) for more detail.
 
 ### CI Validation (Recommended)
 
@@ -177,7 +177,7 @@ Add this to your plugin's CI to validate against declared RHAIE versions:
 
 ```bash
 # For each declared version, verify Helm chart renders cleanly
-for version in $(yq '.rhaie_compatibility.tested_versions[]' plugin.yaml); do
+for version in $(yq '.rhoai_compatibility.tested_versions[]' plugin.yaml); do
   helm template . | oc apply --dry-run=client -f -
 done
 ```

@@ -85,7 +85,7 @@ No longer maintained. Remains in catalog for historical reference but is not ins
 - Users file issues in the plugin's GitHub repository
 - Plugin maintainers decide response times and fix priorities
 - Red Hat may track adoption metrics internally but provides no SLAs
-- Plugins must declare which RHAIE versions they support via `rhaie_compatibility` in their `plugin.yaml`. Plugins may break with RHAIE upgrades; maintainers are responsible for testing and updating compatibility declarations
+- Plugins must declare which RHOAI versions they support via `rhoai_compatibility` in their `plugin.yaml`. Plugins may break with RHOAI upgrades; maintainers are responsible for testing and updating compatibility declarations
 - Use community forums, Slack channels, or plugin-specific support channels
 
 If you need Red Hat support, use core RHAIE features only.
@@ -147,7 +147,7 @@ All plugins must:
 2. **Deploy via Helm chart** - Standard installation method, no custom scripts or Makefiles
 3. **Follow OpenShift best practices** - Non-root containers (UID 1001+), UBI9 base images preferred
 4. **Include documentation** - README with screenshots, installation guide, RHAIE version compatibility
-5. **Declare RHAIE version compatibility** - Which versions the plugin has been tested against (see [`rhaie_compatibility`](docs/plugin-spec.md#required-fields) in the plugin spec). Plugins with no declared compatibility will not be accepted.
+5. **Declare RHOAI version compatibility** - Which versions the plugin has been tested against (see [`rhoai_compatibility`](docs/plugin-spec.md#required-fields) in the plugin spec). Plugins with no declared compatibility will not be accepted.
 6. **Declare RBAC requirements** - What permissions the plugin needs
 7. **Support clean removal** - Uninstalling the Helm release removes all resources
 
@@ -155,7 +155,7 @@ See [Plugin Specification](docs/plugin-spec.md) for detailed technical requireme
 
 ## Forward Compatibility
 
-At this stage, plugins declare which RHAIE versions they have been tested against. Authors are responsible for testing against new RHAIE releases and updating their `rhaie_compatibility.tested_versions` field.
+At this stage, plugins declare which RHOAI versions they have been tested against. Authors are responsible for testing against new RHOAI releases and updating their `rhoai_compatibility.tested_versions` field.
 
 As the ecosystem matures, Red Hat may provide RC access, breaking change notices, and CI test templates — but those are future goals, not current commitments.
 

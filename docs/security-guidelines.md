@@ -16,7 +16,7 @@ Community plugins run alongside RHAIE core. These rules protect the platform and
 ## Namespace Isolation
 
 - **Per-project plugins**: Run in the user's namespace with the user's ServiceAccount. Cannot access other namespaces.
-- **Cluster-shared plugins**: Run in the dedicated `rhaie-community-plugins` namespace with minimal RBAC.
+- **Cluster-shared plugins**: Run in the dedicated `rhoai-community-plugins` namespace with minimal RBAC.
 - Plugins must never access namespaces they don't own.
 
 ## RBAC

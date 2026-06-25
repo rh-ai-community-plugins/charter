@@ -12,9 +12,9 @@ maintainer:
   email: you@example.com
   github: your-github-handle
 
-rhaie_compatibility:
-  min_version: "2.14"
-  tested_versions: ["2.14", "2.15"]
+rhoai_compatibility:
+  min_version: "3.4.0"
+  tested_versions: ["3.4.0"]
 
 image:
   repository: quay.io/rh-ai-community-plugins/my-plugin
