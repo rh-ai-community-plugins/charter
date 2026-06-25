@@ -11,7 +11,7 @@ plugins:
     status: experimental
     maintenance: red-hat
     deployment_model: cluster-shared
-    rhaie_versions: ["2.14"]
+    rhoai_versions: ["3.4.0"]
     maintainer: rh-aiservices-bu
     last_updated: 2026-06-24
 
@@ -21,7 +21,7 @@ plugins:
     status: experimental
     maintenance: red-hat
     deployment_model: cluster-shared
-    rhaie_versions: ["2.14"]
+    rhoai_versions: ["3.4.0"]
     maintainer: rh-aiservices-bu
     last_updated: 2026-06-24
 
@@ -31,7 +31,7 @@ plugins:
     status: experimental
     maintenance: community
     deployment_model: per-project
-    rhaie_versions: ["2.14"]
+    rhoai_versions: ["3.4.0"]
     maintainer: aicatalyst-team
     last_updated: 2026-06-24
 
@@ -41,7 +41,7 @@ plugins:
     status: experimental
     maintenance: community
     deployment_model: cluster-shared
-    rhaie_versions: ["2.14"]
+    rhoai_versions: ["3.4.0"]
     maintainer: rhai-code
     last_updated: 2026-06-24
 
@@ -51,7 +51,7 @@ plugins:
     status: experimental
     maintenance: community
     deployment_model: per-project
-    rhaie_versions: ["2.14"]
+    rhoai_versions: ["3.4.0"]
     maintainer: rhai-code
     last_updated: 2026-06-24
 
@@ -61,6 +61,6 @@ plugins:
     status: experimental
     maintenance: red-hat
     deployment_model: per-project
-    rhaie_versions: ["2.14"]
+    rhoai_versions: ["3.4.0"]
     maintainer: rh-aiservices-bu
     last_updated: 2026-06-24
