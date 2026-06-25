@@ -14,7 +14,7 @@
 - [ ] Helm chart included and `helm template` succeeds
 - [ ] RBAC requirements declared in `plugin.yaml`
 - [ ] Maintainer contact provided
-- [ ] License is Apache-2.0 or MIT
+- [ ] License is Apache-2.0
 - [ ] Containers run as non-root (UID 1001+)
 - [ ] No ClusterRole bindings (or justification provided below)
 

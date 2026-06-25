@@ -57,7 +57,7 @@ This charter is primarily a leadership proposal — designed to get formal backi
 ## Acceptance Criteria
 
 ### Required
-- Open source under an OSI-approved permissive license (Apache-2.0/MIT recommended)
+- Open source under the Apache-2.0 license
 - Basic docs (README with screenshots + install YAML)
 - Declared RHAIE version compatibility
 - Maintainer contact
@@ -221,7 +221,7 @@ Purpose: Inform decisions about which plugins to adopt into core product.
 - **Abandonment**: Defined as maintainer non-responsiveness to issues/PRs for 6+ months (not commit inactivity).
 - **Graduation to core**: Possible but rare. Lifecycle states signal maturity, not a pipeline to product inclusion.
 - **Forward compatibility**: No commitments from RHAIE team yet. Plugins declare tested versions; RC access and CI templates are future goals.
-- **Licensing**: Apache-2.0/MIT recommended, but open to other OSI-approved permissive licenses.
+- **Licensing**: Apache-2.0 required for all plugins.
 - **Dual deployment**: A plugin can support both per-project and cluster-shared modes.
 - **Multi-tenancy**: No prescribed approach for cluster-shared plugins — left to plugin authors.
 - **Security review**: Charter maintainers review RBAC justifications, not a formal security team.

@@ -6,7 +6,7 @@ Anyone can submit a plugin to the catalog: Red Hat engineers, partners, or indiv
 
 Read the [Charter](CHARTER.md) to understand what community plugins are (and aren't). Your plugin must:
 
-- Be open source under an OSI-approved permissive license (Apache-2.0 or MIT recommended — other permissive licenses may be accepted on a case-by-case basis)
+- Be open source under the Apache-2.0 license
 - Deploy via Helm chart
 - Be completely removable without affecting RHAIE core
 - Include a README with screenshots and installation guide
