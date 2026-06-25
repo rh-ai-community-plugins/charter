@@ -39,12 +39,12 @@ A community plugin:
 
 ### Examples of Community Plugins candidates
 
-- **Brewet** (formerly ODH TEC): Technical enablement catalog and demos
-- **Sardeenz**: Specialized visualization tools
-- **Hermes**: A way to deploy and configure an instance of Hermes Agent on OpenShift
-- **GPU Booking App**: Resource scheduling and calendar
-- **OpenShift Skills**: AI-powered cluster operations
-- **Quickstart Launcher**: One-click deployment of quickstart templates
+- **[Brewet](https://github.com/rh-aiservices-bu/odh-tec)** (formerly ODH TEC): Technical enablement catalog and demos
+- **[Sardeenz](https://github.com/rh-aiservices-bu/sardeenz)**: Specialized visualization tools
+- **[Hermes](https://github.com/aicatalyst-team/hermes-openshift)**: A way to deploy and configure an instance of Hermes Agent on OpenShift
+- **[GPU Booking App](https://github.com/rhai-code/gpu-booking-app-plugin)**: Resource scheduling and calendar
+- **[OpenShift Skills](https://github.com/rhai-code/rhai-openshift-skills-plugin)**: AI-powered cluster operations
+- **[Quickstart Launcher](https://github.com/rh-ai-quickstart/quickstart-launcher)**: One-click deployment of quickstart templates
 
 ## What Is NOT a Community Plugin
 
