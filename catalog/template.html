@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plugin Catalog — Red Hat AI Community Plugins</title>
+  <link rel="stylesheet" href="https://unpkg.com/@patternfly/patternfly@6.5.2/patternfly.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      background: #f0f0f0;
+      color: #151515;
+      font-family: "RedHatText", "Red Hat Text", "Overpass", overpass, helvetica, arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    /* — Masthead — */
+    .masthead {
+      background: #151515;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+    }
+    .masthead-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #fff;
+      text-decoration: none;
+    }
+    .masthead-logo svg { flex-shrink: 0; }
+    .masthead-brand {
+      font-family: "RedHatDisplay", "Red Hat Display", "Overpass", overpass, helvetica, arial, sans-serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #fff;
+    }
+    .masthead-brand strong { font-weight: 700; }
+
+    /* — Page Header — */
+    .page-header {
+      background: #fff;
+      border-bottom: 1px solid #d2d2d2;
+      padding: 1.5rem 2rem 1.25rem;
+    }
+    .page-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 0 0 0.5rem;
+    }
+    .page-title h1 {
+      font-family: "RedHatDisplay", "Red Hat Display", "Overpass", overpass, helvetica, arial, sans-serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+      margin: 0;
+      color: #151515;
+    }
+    .page-title svg { flex-shrink: 0; color: #6a6e73; }
+    .page-subtitle {
+      color: #6a6e73;
+      font-size: 0.9rem;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* — Toolbar — */
+    .toolbar {
+      background: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      border-bottom: 1px solid #d2d2d2;
+    }
+    .search-box {
+      display: flex;
+      align-items: center;
+      flex: 1 1 300px;
+      max-width: 500px;
+      border: 1px solid #d2d2d2;
+      border-radius: 4px;
+      background: #fff;
+      overflow: hidden;
+      transition: border-color 0.15s;
+    }
+    .search-box:focus-within { border-color: #0066cc; }
+    .search-box svg {
+      margin: 0 0.5rem;
+      flex-shrink: 0;
+      color: #6a6e73;
+    }
+    .search-box input {
+      border: none;
+      outline: none;
+      font-size: 0.875rem;
+      font-family: inherit;
+      padding: 0.5rem 0.5rem 0.5rem 0;
+      width: 100%;
+      color: #151515;
+      background: transparent;
+    }
+    .search-box input::placeholder { color: #6a6e73; }
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+    }
+    .filter-tab {
+      padding: 0.4rem 1rem;
+      font-size: 0.85rem;
+      font-family: inherit;
+      font-weight: 400;
+      border: 1px solid #d2d2d2;
+      background: #fff;
+      color: #151515;
+      cursor: pointer;
+      transition: all 0.12s ease;
+      margin-left: -1px;
+      white-space: nowrap;
+    }
+    .filter-tab:first-child { border-radius: 20px 0 0 20px; margin-left: 0; }
+    .filter-tab:last-child { border-radius: 0 20px 20px 0; }
+    .filter-tab:hover { background: #f0f0f0; }
+    .filter-tab.active {
+      background: #0066cc;
+      border-color: #0066cc;
+      color: #fff;
+      z-index: 1;
+    }
+    .filter-group-label {
+      font-size: 0.8rem;
+      color: #6a6e73;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding-right: 0.25rem;
+    }
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* — Main Content — */
+    .main-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+    }
+    .section-header {
+      margin-bottom: 1rem;
+    }
+    .section-header h2 {
+      font-family: "RedHatDisplay", "Red Hat Display", "Overpass", overpass, helvetica, arial, sans-serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      margin: 0 0 0.25rem;
+      color: #151515;
+    }
+    .section-header p {
+      color: #6a6e73;
+      font-size: 0.85rem;
+      margin: 0;
+    }
+    .results-count {
+      font-size: 0.85rem;
+      color: #6a6e73;
+      margin-bottom: 1rem;
+    }
+
+    /* — Card Grid — */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .plugin-card {
+      background: #fff;
+      border: 1px solid #d2d2d2;
+      border-radius: 8px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 320px;
+      transition: box-shadow 0.15s ease;
+    }
+    .plugin-card:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    }
+    .plugin-card.hidden { display: none; }
+
+    .card-icon-area {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      overflow: hidden;
+      color: #fff;
+    }
+    .card-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .card-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.6rem;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.125rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .badge-experimental { background: #e7f1fa; color: #002952; }
+    .badge-beta { background: #e4f5f5; color: #003737; }
+    .badge-stable-candidate { background: #e9f5e9; color: #1e4f18; }
+    .badge-deprecated { background: #fdf2e5; color: #795600; }
+    .badge-archived { background: #f0f0f0; color: #6a6e73; }
+    .badge-red-hat { background: #fce7e6; color: #7d1007; }
+    .badge-community { background: #f2f0fc; color: #3b1f8e; }
+
+    .card-name {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+    .card-name a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .card-name a:hover { text-decoration: underline; }
+
+    .card-description {
+      font-size: 0.85rem;
+      color: #6a6e73;
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      flex-grow: 1;
+    }
+
+    .card-screenshot {
+      margin-bottom: 0.75rem;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid #d2d2d2;
+    }
+    .card-screenshot img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .card-meta {
+      font-size: 0.78rem;
+      color: #8a8d90;
+      margin-bottom: 0.5rem;
+    }
+    .card-meta span + span::before {
+      content: " · ";
+    }
+
+    .helm-block {
+      background: #f0f0f0;
+      border: 1px solid #d2d2d2;
+      border-radius: 4px;
+      padding: 0.4rem 0.6rem;
+      font-family: "RedHatMono", "Red Hat Mono", "Liberation Mono", consolas, monospace;
+      font-size: 0.72rem;
+      color: #151515;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      overflow-x: auto;
+    }
+    .helm-block code { white-space: nowrap; }
+    .copy-btn {
+      background: #fff;
+      border: 1px solid #d2d2d2;
+      color: #6a6e73;
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 0.68rem;
+      font-family: inherit;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+    .copy-btn:hover { border-color: #0066cc; color: #0066cc; }
+    .copy-btn.copied { border-color: #3e8a3e; color: #3e8a3e; }
+
+    .card-action {
+      margin-top: auto;
+      padding-top: 0.75rem;
+    }
+    .card-action a {
+      color: #0066cc;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 400;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .card-action a:hover { text-decoration: underline; }
+    .card-action a svg { flex-shrink: 0; }
+
+    /* — No Results — */
+    .no-results {
+      text-align: center;
+      padding: 3rem;
+      color: #6a6e73;
+      font-size: 1rem;
+      display: none;
+    }
+
+    /* — Footer Sections — */
+    .legend-section {
+      background: #fff;
+      border: 1px solid #d2d2d2;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-top: 2rem;
+    }
+    .legend-section h3 {
+      font-family: "RedHatDisplay", "Red Hat Display", "Overpass", overpass, helvetica, arial, sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0 0 0.75rem;
+      color: #151515;
+    }
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.5rem;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: #6a6e73;
+    }
+
+    .cta-section {
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 1.5rem;
+    }
+    .cta-section p {
+      color: #6a6e73;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    .cta-btn {
+      display: inline-block;
+      padding: 0.55rem 1.5rem;
+      background: #0066cc;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: background 0.15s;
+    }
+    .cta-btn:hover { background: #004080; }
+
+    .site-footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      color: #6a6e73;
+      border-top: 1px solid #d2d2d2;
+      margin-top: 1rem;
+    }
+    .site-footer a { color: #0066cc; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+
+    /* — Responsive — */
+    @media (max-width: 900px) {
+      .card-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+      .toolbar { padding: 1rem; }
+      .page-header { padding: 1.25rem 1rem 1rem; }
+      .main-content { padding: 1.25rem 1rem; }
+    }
+    @media (max-width: 600px) {
+      .page-title h1 { font-size: 1.3rem; }
+      .card-grid { grid-template-columns: 1fr; }
+      .toolbar { flex-direction: column; align-items: stretch; }
+      .search-box { max-width: none; }
+      .filter-group { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Masthead -->
+  <header class="masthead">
+    <a class="masthead-logo" href="https://github.com/rh-ai-community-plugins" target="_blank" rel="noopener">
+      <img src="icon.png" alt="Community Plugins" width="36" height="36" style="border-radius: 6px;">
+      <span class="masthead-brand">Red Hat <strong>AI Community Plugins</strong></span>
+    </a>
+  </header>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-title">
+      <img src="icon.png" alt="" width="32" height="32" style="border-radius: 6px;">
+      <h1>Plugin Catalog</h1>
+    </div>
+    <p class="page-subtitle">Discover community plugins available for Red Hat AI Enterprise. Simple install, simple removal.</p>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar" role="toolbar" aria-label="Filter plugins">
+    <div class="search-box">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M11.5 7a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0zm-.82 4.74a6 6 0 1 1 1.06-1.06l3.04 3.04a.75.75 0 1 1-1.06 1.06l-3.04-3.04z"/></svg>
+      <input type="text" id="search-input" placeholder="Filter by name, description and maintainer">
+    </div>
+    <div class="filter-group">
+      <button class="filter-tab active" data-filter="all" data-value="all">All plugins</button>
+      <button class="filter-tab" data-filter="maintenance" data-value="red-hat">Red Hat</button>
+      <button class="filter-tab" data-filter="maintenance" data-value="community">Community</button>
+    </div>
+    <div class="filter-group">
+      <span class="filter-group-label">Deploy:</span>
+      <button class="filter-tab" data-filter="deployment_model" data-value="per-project">Per Project</button>
+      <button class="filter-tab" data-filter="deployment_model" data-value="cluster-shared">Cluster Shared</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <div class="results-count" id="results-count">
+      Showing <strong>{{ plugin_count }}</strong> plugins
+    </div>
+
+    <div class="card-grid" id="plugin-grid">
+      {% for plugin in plugins %}
+      <div class="plugin-card"
+           data-status="{{ plugin.status }}"
+           data-maintenance="{{ plugin.maintenance }}"
+           data-deployment_model="{{ plugin.deployment_model }}"
+           data-search="{{ plugin.name }} {{ plugin.description }} {{ plugin.tagline if plugin.tagline else '' }} {{ plugin.maintainer }}">
+
+        <div class="card-icon-area">
+          <div class="card-icon" style="background: {{ ['#0066cc','#6753ac','#009596','#c9190b','#f0ab00','#3e8635'][loop.index0 % 6] }};">
+            {% if plugin.icon_url %}
+              <img src="{{ plugin.icon_url }}" alt="{{ plugin.name }} icon">
+            {% else %}
+              {{ plugin.name[0] | upper }}
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="card-badges">
+          <span class="badge badge-{{ plugin.status }}">{{ plugin.status | replace('-', ' ') | title }}</span>
+          <span class="badge badge-{{ plugin.maintenance }}">{{ plugin.maintenance | replace('-', ' ') | title }}</span>
+        </div>
+
+        <div class="card-name">
+          <a href="{{ plugin.repo }}" target="_blank" rel="noopener">{{ plugin.name }}</a>
+        </div>
+
+        <div class="card-description">{{ plugin.tagline if plugin.tagline else plugin.description }}</div>
+
+        {% if plugin.screenshot_url %}
+        <div class="card-screenshot">
+          <img src="{{ plugin.screenshot_url }}" alt="{{ plugin.name }} screenshot" loading="lazy">
+        </div>
+        {% endif %}
+
+        <div class="card-meta">
+          {% if plugin.version %}<span>v{{ plugin.version }}</span>{% endif %}
+          <span>RHAIE {{ plugin.rhoai_versions | join(', ') }}</span>
+          <span>{{ plugin.deployment_model | replace('-', ' ') | title }}</span>
+        </div>
+
+        {% if plugin.helm_install %}
+        <div class="helm-block">
+          <code>{{ plugin.helm_install }}</code>
+          <button class="copy-btn" onclick="copyInstall(this, '{{ plugin.helm_install }}')">Copy</button>
+        </div>
+        {% endif %}
+
+        <div class="card-action">
+          <a href="{{ plugin.repo }}" target="_blank" rel="noopener">
+            View on GitHub
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H3.75a.75.75 0 0 1 0-1.5h7.44L8.22 4.03a.75.75 0 0 1 0-1.06z"/></svg>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="no-results" id="no-results">
+      No plugins match the selected filters.
+    </div>
+
+    <!-- Legend -->
+    <div class="legend-section">
+      <h3>Plugin Lifecycle</h3>
+      <div class="legend-grid">
+        <div class="legend-item"><span class="badge badge-experimental">Experimental</span> Early development</div>
+        <div class="legend-item"><span class="badge badge-beta">Beta</span> Usable, expect changes</div>
+        <div class="legend-item"><span class="badge badge-stable-candidate">Stable Candidate</span> Mature, well-tested</div>
+        <div class="legend-item"><span class="badge badge-deprecated">Deprecated</span> Being phased out</div>
+        <div class="legend-item"><span class="badge badge-archived">Archived</span> No longer maintained</div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <p>Built a plugin for Red Hat AI Enterprise? Share it with the community.</p>
+      <a class="cta-btn" href="https://github.com/rh-ai-community-plugins/charter/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Submit a Plugin</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <div class="site-footer">
+    Maintained by the Customer Adoption &amp; Innovation team, AI Business Unit, Red Hat.
+    &middot; <a href="https://github.com/rh-ai-community-plugins/charter">Charter</a>
+    &middot; <a href="http://red.ht/cai-team">Team</a>
+  </div>
+
+  <script>
+    (function() {
+      var activeFilters = {};
+      var tabs = document.querySelectorAll('.filter-tab');
+      var cards = document.querySelectorAll('.plugin-card');
+      var noResults = document.getElementById('no-results');
+      var resultsCount = document.getElementById('results-count');
+      var searchInput = document.getElementById('search-input');
+
+      tabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          var filter = this.dataset.filter;
+          var value = this.dataset.value;
+
+          if (filter === 'all') {
+            activeFilters = {};
+            tabs.forEach(function(t) { t.classList.remove('active'); });
+            this.classList.add('active');
+          } else {
+            var allTab = document.querySelector('[data-filter="all"]');
+            allTab.classList.remove('active');
+
+            var group = this.parentElement;
+            var siblings = group.querySelectorAll('.filter-tab[data-filter="' + filter + '"]');
+            if (this.classList.contains('active')) {
+              this.classList.remove('active');
+              delete activeFilters[filter];
+              if (Object.keys(activeFilters).length === 0) allTab.classList.add('active');
+            } else {
+              siblings.forEach(function(s) { s.classList.remove('active'); });
+              delete activeFilters[filter];
+              this.classList.add('active');
+              activeFilters[filter] = value;
+            }
+          }
+          applyFilters();
+        });
+      });
+
+      searchInput.addEventListener('input', function() {
+        applyFilters();
+      });
+
+      function applyFilters() {
+        var query = searchInput.value.toLowerCase().trim();
+        var visibleCount = 0;
+
+        cards.forEach(function(card) {
+          var show = true;
+
+          for (var group in activeFilters) {
+            var val = card.getAttribute('data-' + group);
+            if (val !== activeFilters[group]) { show = false; break; }
+          }
+
+          if (show && query) {
+            var searchText = (card.dataset.search || '').toLowerCase();
+            if (searchText.indexOf(query) === -1) show = false;
+          }
+
+          card.classList.toggle('hidden', !show);
+          if (show) visibleCount++;
+        });
+
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        resultsCount.innerHTML = 'Showing <strong>' + visibleCount + '</strong> plugin' + (visibleCount !== 1 ? 's' : '');
+      }
+    })();
+
+    function copyInstall(btn, text) {
+      navigator.clipboard.writeText(text).then(function() {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function() {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>

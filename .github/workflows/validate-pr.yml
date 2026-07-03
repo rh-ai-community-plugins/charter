@@ -52,6 +52,23 @@ jobs:
               if not versions or (isinstance(versions, list) and len(versions) == 0):
                   errors.append(f"{prefix}: rhoai_versions must not be empty — declare at least one tested RHOAI version")
 
+              if 'icon_url' in plugin:
+                  icon = plugin['icon_url']
+                  if not isinstance(icon, str) or not icon.startswith('https://'):
+                      errors.append(f"{prefix}: icon_url must be an HTTPS URL")
+              if 'version' in plugin:
+                  if not isinstance(plugin['version'], str) or not plugin['version'].strip():
+                      errors.append(f"{prefix}: version must be a non-empty string")
+              if 'tagline' in plugin:
+                  tagline = plugin['tagline']
+                  if not isinstance(tagline, str) or not tagline.strip():
+                      errors.append(f"{prefix}: tagline must be a non-empty string")
+                  elif len(tagline) > 120:
+                      errors.append(f"{prefix}: tagline must be 120 characters or fewer (got {len(tagline)})")
+              if 'helm_install' in plugin:
+                  if not isinstance(plugin['helm_install'], str) or not plugin['helm_install'].strip():
+                      errors.append(f"{prefix}: helm_install must be a non-empty string")
+
           if errors:
               print("Validation errors:")
               for e in errors:
