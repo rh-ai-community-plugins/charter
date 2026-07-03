@@ -20,6 +20,7 @@ plugins:
     last_updated: 2026-06-24
     version: "0.1.0"
     helm_install: helm install brewet oci://quay.io/rh-ai-community-plugins/brewet-chart
+    screenshot_url: screenshots/brewet.png
 
   - name: sardeenz
     description: Specialized visualization tools
@@ -87,3 +88,16 @@ plugins:
     last_updated: 2026-06-24
     version: "0.1.0"
     helm_install: helm install quickstart-launcher oci://quay.io/rh-ai-community-plugins/quickstart-launcher-chart
+
+  - name: kueue-visualizer
+    description: Visualize Kueue workload scheduling, queue topology, and capacity
+    tagline: See your queues at a glance
+    repo: https://github.com/rh-ai-community-plugins/kueue-visualizer
+    status: experimental
+    maintenance: community
+    deployment_model: cluster-shared
+    rhoai_versions: ["3.4.0"]
+    maintainer: rh-ai-community-plugins
+    last_updated: 2026-07-03
+    version: "0.1.0"
+    helm_install: helm install kueue-visualizer oci://quay.io/rh-ai-community-plugins/kueue-visualizer-chart
