@@ -62,6 +62,7 @@ plugins:
     last_updated: 2026-06-24
     version: "0.1.0"
     helm_install: helm install gpu-booking oci://quay.io/rh-ai-community-plugins/gpu-booking-chart
+    screenshot_url: screenshots/gpu-booking.png
 
   - name: openshift-skills
     description: AI-powered cluster operations
