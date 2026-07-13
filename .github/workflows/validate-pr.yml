@@ -30,11 +30,9 @@ jobs:
           with open('plugins.yaml') as f:
               data = yaml.safe_load(f)
 
-          required_fields = ['name', 'description', 'repo', 'status', 'maintenance',
-                             'deployment_model', 'rhoai_versions', 'maintainer', 'last_updated']
+          required_fields = ['name', 'repo', 'status', 'maintenance', 'last_updated']
           valid_statuses = ['experimental', 'beta', 'stable-candidate', 'deprecated', 'archived']
           valid_maintenance = ['red-hat', 'community', 'archived']
-          valid_models = ['per-project', 'cluster-shared']
 
           errors = []
           for i, plugin in enumerate(data.get('plugins', [])):
@@ -46,28 +44,6 @@ jobs:
                   errors.append(f"{prefix}: invalid status '{plugin.get('status')}' (must be one of {valid_statuses})")
               if plugin.get('maintenance') not in valid_maintenance:
                   errors.append(f"{prefix}: invalid maintenance '{plugin.get('maintenance')}' (must be one of {valid_maintenance})")
-              if plugin.get('deployment_model') not in valid_models:
-                  errors.append(f"{prefix}: invalid deployment_model '{plugin.get('deployment_model')}' (must be one of {valid_models})")
-              versions = plugin.get('rhoai_versions', [])
-              if not versions or (isinstance(versions, list) and len(versions) == 0):
-                  errors.append(f"{prefix}: rhoai_versions must not be empty — declare at least one tested RHOAI version")
-
-              if 'icon_url' in plugin:
-                  icon = plugin['icon_url']
-                  if not isinstance(icon, str) or not icon.startswith('https://'):
-                      errors.append(f"{prefix}: icon_url must be an HTTPS URL")
-              if 'version' in plugin:
-                  if not isinstance(plugin['version'], str) or not plugin['version'].strip():
-                      errors.append(f"{prefix}: version must be a non-empty string")
-              if 'tagline' in plugin:
-                  tagline = plugin['tagline']
-                  if not isinstance(tagline, str) or not tagline.strip():
-                      errors.append(f"{prefix}: tagline must be a non-empty string")
-                  elif len(tagline) > 120:
-                      errors.append(f"{prefix}: tagline must be 120 characters or fewer (got {len(tagline)})")
-              if 'helm_install' in plugin:
-                  if not isinstance(plugin['helm_install'], str) or not plugin['helm_install'].strip():
-                      errors.append(f"{prefix}: helm_install must be a non-empty string")
 
           if errors:
               print("Validation errors:")
@@ -103,4 +79,73 @@ jobs:
                   print(f"  - {e}")
           else:
               print("All repo links accessible.")
+          EOF
+
+      - name: Cross-validate plugin.yaml from repos
+        run: |
+          python3 << 'EOF'
+          import yaml, urllib.request, urllib.error, re, sys
+
+          with open('plugins.yaml') as f:
+              data = yaml.safe_load(f)
+
+          required_plugin_fields = [
+              'name', 'displayName', 'description', 'version', 'maintainer',
+              'rhoai_compatibility', 'deployment_model', 'install', 'remote', 'rbac',
+          ]
+          valid_deployment_models = ['per-project', 'cluster-shared', 'both']
+          valid_install_methods = ['automatic', 'assisted', 'manual']
+
+          errors = []
+          warnings = []
+
+          for plugin in data.get('plugins', []):
+              name = plugin.get('name', 'unnamed')
+              repo = plugin.get('repo', '')
+
+              match = re.match(r'https://github\.com/([^/]+/[^/]+)/?', repo)
+              if not match:
+                  warnings.append(f"{name}: cannot parse repo URL, skipping plugin.yaml validation")
+                  continue
+
+              raw_url = f"https://raw.githubusercontent.com/{match.group(1)}/main/plugin.yaml"
+              try:
+                  req = urllib.request.Request(raw_url, headers={'User-Agent': 'rh-ai-pr-validator'})
+                  with urllib.request.urlopen(req, timeout=15) as resp:
+                      plugin_data = yaml.safe_load(resp.read())
+              except Exception as e:
+                  warnings.append(f"{name}: could not fetch plugin.yaml ({e})")
+                  continue
+
+              prefix = f"{name} plugin.yaml"
+              for field in required_plugin_fields:
+                  if field not in plugin_data:
+                      errors.append(f"{prefix}: missing required field '{field}'")
+
+              dm = plugin_data.get('deployment_model')
+              if dm and dm not in valid_deployment_models:
+                  errors.append(f"{prefix}: invalid deployment_model '{dm}'")
+
+              install = plugin_data.get('install', {})
+              method = install.get('method')
+              if method and method not in valid_install_methods:
+                  errors.append(f"{prefix}: invalid install.method '{method}'")
+
+              compat = plugin_data.get('rhoai_compatibility', {})
+              tested = compat.get('tested_versions', [])
+              if not tested:
+                  errors.append(f"{prefix}: rhoai_compatibility.tested_versions must not be empty")
+
+          if warnings:
+              print("Cross-validation warnings (non-blocking):")
+              for w in warnings:
+                  print(f"  - {w}")
+
+          if errors:
+              print("\nCross-validation errors:")
+              for e in errors:
+                  print(f"  - {e}")
+              sys.exit(1)
+          else:
+              print(f"Cross-validation passed for all plugins.")
           EOF

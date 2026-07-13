@@ -65,4 +65,4 @@ When RHOAI release candidates are announced:
 
 1. Run your Helm chart validation against the RC
 2. Test the plugin UI in the RHOAI dashboard
-3. Update `tested_versions` in your `plugin.yaml` and `rhoai_versions` in `plugins.yaml` via PR
+3. Update `tested_versions` in your `plugin.yaml` via PR

@@ -1,37 +1,53 @@
 # Example plugin.yaml — copy this as a starting point for your plugin.
 # See docs/plugin-spec.md for the full specification.
+# Fields marked [PLUGIN-SPECIFIC] must be customized for your plugin.
 
 # --- Required fields ---
 
-name: my-plugin
-version: 0.1.0
+name: my-plugin                    # [PLUGIN-SPECIFIC] unique plugin identifier (kebab-case)
+displayName: My Plugin             # [PLUGIN-SPECIFIC] human-readable name
 description: A one-line description of what this plugin does
+version: 0.1.0
 
-maintainer:
+maintainer:                        # [PLUGIN-SPECIFIC]
   name: Your Name
-  email: you@example.com
   github: your-github-handle
 
-rhoai_compatibility:
+rhoai_compatibility:               # [PLUGIN-SPECIFIC]
   min_version: "3.4.0"
   tested_versions: ["3.4.0"]
-
-image:
-  repository: quay.io/rh-ai-community-plugins/my-plugin
-  tag: "0.1.0"
-
-helm:
-  chart_path: chart/
-
-nav:
-  label: My Plugin
-  icon: puzzle-piece
-  url_pattern: /community/my-plugin
 
 # per-project: user provisions instances per namespace
 # cluster-shared: admin installs once, all authorized users share
 # both: plugin supports either mode (Helm values switch between them)
 deployment_model: per-project
+
+image:                             # [PLUGIN-SPECIFIC]
+  repository: quay.io/rh-ai-community-plugins/my-plugin
+  tag: "0.1.0"
+
+install:
+  method: automatic                # automatic | assisted | manual
+  helm:
+    chart_path: chart/
+    registry: oci://quay.io/rh-ai-community-plugins/my-plugin  # [PLUGIN-SPECIFIC]
+  prerequisites: []
+  instructions: https://github.com/your-org/my-plugin/docs/INSTALL.md  # [PLUGIN-SPECIFIC]
+
+remote:
+  type: module-federation
+  spec:
+    name: myPlugin                 # [PLUGIN-SPECIFIC] Module Federation container name (camelCase)
+    scope: myPlugin                # [PLUGIN-SPECIFIC] must match name above
+    # [PLUGIN-SPECIFIC] Update this URL to point to your deployed OpenShift route.
+    remoteEntry: https://<your-openshift-route>/remoteEntry.js
+    paths:
+      - type: route
+        path: /my-plugin           # [PLUGIN-SPECIFIC] must match route prefix in extensions.ts
+        extensions:
+          - myPlugin/extensions    # [PLUGIN-SPECIFIC] {scope}/extensions
+      - type: icon
+        path: myPlugin/Icon        # [PLUGIN-SPECIFIC] {scope}/Icon
 
 rbac:
   required_roles: []
@@ -39,6 +55,10 @@ rbac:
   cluster_roles: false
 
 # --- Optional fields ---
+
+# bff_image:                       # Only if using Backend-For-Frontend pattern
+#   repository: quay.io/rh-ai-community-plugins/my-plugin-bff  # [PLUGIN-SPECIFIC]
+#   tag: "0.1.0"
 
 dependencies:
   - name: postgresql
@@ -58,6 +78,7 @@ telemetry:
   metrics_endpoint: /metrics
 
 support:
+  repo: https://github.com/your-org/your-plugin     # [PLUGIN-SPECIFIC]
   docs: https://github.com/your-org/your-plugin/docs
   issues: https://github.com/your-org/your-plugin/issues
 

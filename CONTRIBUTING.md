@@ -10,41 +10,34 @@ Read the [Charter](CHARTER.md) to understand what community plugins are (and are
 - Deploy via Helm chart
 - Be completely removable without affecting RHAIE core
 - Include a README with screenshots and installation guide
-- Declare RHAIE version compatibility
+- Have a `plugin.yaml` at the repo root with all required metadata (see [plugin spec](docs/plugin-spec.md))
+- Declare RHAIE version compatibility in `plugin.yaml`
 - Follow OpenShift best practices (non-root containers, UBI9 base images preferred)
 
-See [docs/plugin-spec.md](docs/plugin-spec.md) for the full technical specification.
-
-## Plugin Repository Structure
-
-See [Plugin Specification — Repository Structure](docs/plugin-spec.md#repository-structure) for the required layout and [docs/examples/example-plugin.yaml](docs/examples/example-plugin.yaml) for a complete `plugin.yaml` template.
+See [docs/plugin-spec.md](docs/plugin-spec.md) for the full technical specification and [docs/examples/example-plugin.yaml](docs/examples/example-plugin.yaml) for a starter template.
 
 ## Submission Process
 
-1. **Prepare your plugin repo** with the required structure above
+1. **Prepare your plugin repo** with the required structure (see [plugin spec](docs/plugin-spec.md#repository-structure))
 2. **Fork this repo** (`rh-ai-community-plugins/charter`)
 3. **Add your plugin** to `plugins.yaml`:
 
 ```yaml
   - name: your-plugin-name
-    description: Short description of what it does
     repo: https://github.com/your-org/your-plugin
     status: experimental
     maintenance: community
-    deployment_model: per-project  # per-project, cluster-shared, or both
-    rhoai_versions: ["3.4.0"]      # required — at least one tested RHOAI version
-    maintainer: your-github-handle
-    last_updated: 2026-06-24
+    last_updated: 2026-07-13
 ```
 
-> **Note**: `rhoai_versions` must not be empty. Declare at least one RHOAI version your plugin has been tested against. This must match the `rhoai_compatibility.tested_versions` field in your plugin's own `plugin.yaml`. CI will reject PRs with empty version declarations.
+All other metadata (description, version, compatibility, deployment model, etc.) is read from your plugin's own `plugin.yaml` — no need to duplicate it here. CI will fetch and validate your `plugin.yaml` automatically.
 
 1. **Open a pull request** using the PR template
-1. **Wait for review** — CI validates your entry, then the Red Hat team reviews for policy compliance
+1. **Wait for review** — CI validates your entry and cross-validates your plugin.yaml, then the Red Hat team reviews for policy compliance
 
 ## What Happens After Submission
 
-- **CI checks**: YAML validation, required fields, link checks, security scans
+- **CI checks**: YAML validation, required fields, link checks, plugin.yaml cross-validation
 - **Red Hat review**: Policy compliance only — we don't review technical quality or code
 - **Merge**: Approved PRs merge and your plugin appears in the catalog
 - **First-come, first-served**: Plugin names are unique. If your name conflicts, you'll need to pick a different one

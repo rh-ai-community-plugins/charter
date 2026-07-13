@@ -36,7 +36,7 @@ npm run lint:md
 python3 -c "import yaml; yaml.safe_load(open('plugins.yaml'))"
 ```
 
-The CI validation logic is inline in `.github/workflows/validate-pr.yml` — it checks required fields, valid enum values, non-empty `rhoai_versions`, and link accessibility. There is no standalone validation script to run locally; replicate by reading the workflow.
+The CI validation logic is inline in `.github/workflows/validate-pr.yml` — it checks required fields (`name`, `repo`, `status`, `maintenance`, `last_updated`), valid enum values, link accessibility, and cross-validates each plugin's own `plugin.yaml` from its repo.
 
 ### Build the catalog site
 
@@ -45,33 +45,31 @@ pip install pyyaml jinja2
 python catalog/build.py
 ```
 
-Output goes to `_site/` (gitignored). This generates a single `index.html` from `catalog/template.html` (Jinja2) + `plugins.yaml`.
+Output goes to `_site/` (gitignored). The build aggregates metadata by fetching each plugin's `plugin.yaml` from its repo, then renders `catalog/template.html` with the merged data. It also produces `_site/catalog.json` for the future in-product catalog plugin.
 
 ## Architecture
 
 ### plugins.yaml
 
-Central registry. Each entry has required fields (`name`, `description`, `repo`, `status`, `maintenance`, `deployment_model`, `rhoai_versions`, `maintainer`, `last_updated`) and optional fields (`version`, `icon_url`, `tagline`, `helm_install`, `screenshot_url`). CI enforces this schema on PRs that touch the file.
+Lightweight registry. Each entry has required fields (`name`, `repo`, `status`, `maintenance`, `last_updated`). All other plugin metadata (description, version, compatibility, deployment model, etc.) lives in each plugin's own `plugin.yaml` — single source of truth, no drift. CI enforces this schema on PRs that touch the file.
 
 Valid values:
 
 - `status`: experimental, beta, stable-candidate, deprecated, archived
 - `maintenance`: red-hat, community, archived
-- `deployment_model`: per-project, cluster-shared
-
-Note: the spec in `docs/plugin-spec.md` also allows `both` for deployment_model in individual plugin repos, but the CI validation for `plugins.yaml` only accepts `per-project` or `cluster-shared`.
 
 ### Catalog site (catalog/)
 
-- `build.py` — reads `plugins.yaml`, sorts by status (stable-candidate first, archived last), renders `template.html` with Jinja2, copies screenshots and icon to `_site/`
+- `aggregate.py` — fetches each plugin's `plugin.yaml` from its GitHub repo, validates schema conformance, merges with registry data, auto-discovers screenshots, and produces `_site/catalog.json`
+- `build.py` — calls the aggregation pipeline, then renders `template.html` with the merged data, copies screenshots and icon to `_site/`
 - `template.html` — single-page HTML using PatternFly 6 CSS (loaded from CDN), with client-side search/filter JS
-- `screenshots/` — plugin screenshots referenced by `screenshot_url` in `plugins.yaml`
+- `screenshots/` — plugin screenshots auto-discovered by name convention (`{plugin-name}.png`)
 - Deployed automatically to GitHub Pages on push to `main` (when `plugins.yaml` or `catalog/**` change)
 
 ### CI Workflows (.github/workflows/)
 
-- `validate-pr.yml` — runs on PRs touching `plugins.yaml`: YAML syntax check, required field validation, enum validation, repo link check (non-blocking)
-- `deploy-catalog.yml` — runs on push to `main`: builds catalog and deploys to GitHub Pages
+- `validate-pr.yml` — runs on PRs touching `plugins.yaml`: YAML syntax check, required field validation, enum validation, repo link check (non-blocking), cross-validation of each plugin's `plugin.yaml` from its repo
+- `deploy-catalog.yml` — runs on push to `main`: aggregates plugin metadata, builds catalog, and deploys to GitHub Pages
 
 ### Documentation (docs/)
 
@@ -83,7 +81,7 @@ Note: the spec in `docs/plugin-spec.md` also allows `both` for deployment_model 
 
 ## Working With This Repo
 
-When adding a plugin entry to `plugins.yaml`, ensure `rhoai_versions` is non-empty and matches the plugin's own `rhoai_compatibility.tested_versions`. The PR template at `.github/PULL_REQUEST_TEMPLATE/add-plugin.md` has the submission checklist.
+When adding a plugin entry to `plugins.yaml`, only `name`, `repo`, `status`, `maintenance`, and `last_updated` are needed — all other metadata is fetched from the plugin's own `plugin.yaml` during CI and catalog builds. The PR template at `.github/PULL_REQUEST_TEMPLATE/add-plugin.md` has the submission checklist.
 
 When editing the catalog template, run `python catalog/build.py` and inspect `_site/index.html` to verify rendering.
 
