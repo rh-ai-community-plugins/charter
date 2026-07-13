@@ -39,8 +39,8 @@ See [Plugin Specification — Repository Structure](docs/plugin-spec.md#reposito
 
 > **Note**: `rhoai_versions` must not be empty. Declare at least one RHOAI version your plugin has been tested against. This must match the `rhoai_compatibility.tested_versions` field in your plugin's own `plugin.yaml`. CI will reject PRs with empty version declarations.
 
-4. **Open a pull request** using the PR template
-5. **Wait for review** — CI validates your entry, then the Red Hat team reviews for policy compliance
+1. **Open a pull request** using the PR template
+1. **Wait for review** — CI validates your entry, then the Red Hat team reviews for policy compliance
 
 ## What Happens After Submission
 

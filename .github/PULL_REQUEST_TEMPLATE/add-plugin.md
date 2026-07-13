@@ -1,7 +1,7 @@
 ## New Plugin Submission
 
-**Plugin name**: 
-**Plugin repo**: 
+**Plugin name**:
+**Plugin repo**:
 **Deployment model**: per-project / cluster-shared
 
 ### Checklist

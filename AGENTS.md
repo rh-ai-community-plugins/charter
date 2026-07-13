@@ -23,6 +23,13 @@ Individual plugins live in their own repositories (see `plugins.yaml` for links)
 
 ## Common Commands
 
+### Lint markdown
+
+```bash
+npm install
+npm run lint:md
+```
+
 ### Validate plugins.yaml
 
 ```bash
@@ -47,6 +54,7 @@ Output goes to `_site/` (gitignored). This generates a single `index.html` from 
 Central registry. Each entry has required fields (`name`, `description`, `repo`, `status`, `maintenance`, `deployment_model`, `rhoai_versions`, `maintainer`, `last_updated`) and optional fields (`version`, `icon_url`, `tagline`, `helm_install`, `screenshot_url`). CI enforces this schema on PRs that touch the file.
 
 Valid values:
+
 - `status`: experimental, beta, stable-candidate, deprecated, archived
 - `maintenance`: red-hat, community, archived
 - `deployment_model`: per-project, cluster-shared

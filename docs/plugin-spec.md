@@ -78,6 +78,7 @@ User clicks "Add to project" in the dashboard. The dashboard triggers a Helm ins
 **Examples**: Quickstart Launcher, Hermes, OpenShift Skills
 
 **Characteristics**:
+
 - Runs in user's namespace with user's ServiceAccount
 - User provisions and manages their own instances
 - Each project can have its own instance
@@ -89,6 +90,7 @@ Admin runs Helm install once. The plugin appears in the left nav for all authori
 **Examples**: Brewet, GPU Booking, LibreChat
 
 **Characteristics**:
+
 - Runs in dedicated `rhoai-community-plugins` namespace
 - Admin provisions once, users share
 - Multi-tenancy approach is up to the plugin author (TBD — best practices will be defined as the ecosystem matures)
@@ -99,7 +101,7 @@ Plugin supports either deployment model. The Helm chart accepts a value to switc
 
 ## Repository Structure
 
-```
+```text
 your-plugin/
 ├── plugin.yaml           # Required: metadata and configuration
 ├── chart/                # Required: Helm chart
@@ -122,7 +124,7 @@ your-plugin/
 
 Plugin images are hosted at [`quay.io/rh-ai-community-plugins`](https://quay.io/organization/rh-ai-community-plugins). Use your plugin name as the image repository:
 
-```
+```text
 quay.io/rh-ai-community-plugins/<your-plugin-name>:<version>
 ```
 
@@ -136,17 +138,20 @@ quay.io/rh-ai-community-plugins/<your-plugin-name>:<version>
 ## Security & Isolation
 
 ### Container Security
+
 - **Non-root**: Containers must run as non-root user (UID 1001+)
 - **UBI9 base images**: Preferred but not required
 - **Read-only rootfs**: Recommended
 - **No privileged mode**: Containers must not run privileged
 
 ### Namespace Isolation
+
 - Per-project plugins run in the user's namespace
 - Cluster-shared plugins run in `rhoai-community-plugins` namespace with minimal RBAC
 - Plugins cannot access RHAIE internal databases or APIs directly
 
 ### RBAC
+
 - All required permissions must be declared in `plugin.yaml`
 - No ClusterRole bindings unless explicitly justified and documented
 - Admin reviews RBAC requirements before approving the plugin
