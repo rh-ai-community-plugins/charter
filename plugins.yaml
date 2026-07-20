@@ -6,44 +6,14 @@
 # See CONTRIBUTING.md for submission guidelines.
 
 plugins:
-  - name: brewet
-    repo: https://github.com/rh-aiservices-bu/odh-tec
-    status: experimental
-    maintenance: red-hat
-    last_updated: 2026-06-24
-
-  - name: sardeenz
-    repo: https://github.com/rh-aiservices-bu/sardeenz
-    status: experimental
-    maintenance: red-hat
-    last_updated: 2026-06-24
-
-  - name: hermes
-    repo: https://github.com/aicatalyst-team/hermes-openshift
+  - name: hello-world
+    repo: https://github.com/rh-ai-community-plugins/hello-world
     status: experimental
     maintenance: community
-    last_updated: 2026-06-24
-
-  - name: gpu-booking
-    repo: https://github.com/rhai-code/gpu-booking-app-plugin
-    status: experimental
-    maintenance: community
-    last_updated: 2026-06-24
-
-  - name: openshift-skills
-    repo: https://github.com/rhai-code/rhai-openshift-skills-plugin
-    status: experimental
-    maintenance: community
-    last_updated: 2026-06-24
-
-  - name: quickstart-launcher
-    repo: https://github.com/rh-ai-quickstart/quickstart-launcher
-    status: experimental
-    maintenance: red-hat
-    last_updated: 2026-06-24
+    last_updated: 2026-07-16
 
   - name: kueue-visualizer
     repo: https://github.com/rh-ai-community-plugins/kueue-visualizer
     status: experimental
     maintenance: community
-    last_updated: 2026-07-03
+    last_updated: 2026-07-20
