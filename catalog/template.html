@@ -468,16 +468,12 @@
       <div class="plugin-card"
            data-status="{{ plugin.status }}"
            data-maintenance="{{ plugin.maintenance }}"
-           data-deployment_model="{{ plugin.deployment_model }}"
-           data-search="{{ plugin.name }} {{ plugin.description }} {{ plugin.tagline if plugin.tagline else '' }} {{ plugin.maintainer }}">
+           data-deployment_model="{{ plugin.deployment_model if plugin.deployment_model else '' }}"
+           data-search="{{ plugin.name }} {{ plugin.displayName if plugin.displayName else '' }} {{ plugin.description if plugin.description else '' }} {{ plugin.maintainer_github if plugin.maintainer_github else '' }}">
 
         <div class="card-icon-area">
           <div class="card-icon" style="background: {{ ['#0066cc','#6753ac','#009596','#c9190b','#f0ab00','#3e8635'][loop.index0 % 6] }};">
-            {% if plugin.icon_url %}
-              <img src="{{ plugin.icon_url }}" alt="{{ plugin.name }} icon">
-            {% else %}
-              {{ plugin.name[0] | upper }}
-            {% endif %}
+            {{ plugin.name[0] | upper }}
           </div>
         </div>
 
@@ -487,10 +483,10 @@
         </div>
 
         <div class="card-name">
-          <a href="{{ plugin.repo }}" target="_blank" rel="noopener">{{ plugin.name }}</a>
+          <a href="{{ plugin.repo }}" target="_blank" rel="noopener">{{ plugin.displayName if plugin.displayName else plugin.name }}</a>
         </div>
 
-        <div class="card-description">{{ plugin.tagline if plugin.tagline else plugin.description }}</div>
+        <div class="card-description">{{ plugin.description if plugin.description else '' }}</div>
 
         {% if plugin.screenshot_url %}
         <div class="card-screenshot">
@@ -500,8 +496,8 @@
 
         <div class="card-meta">
           {% if plugin.version %}<span>v{{ plugin.version }}</span>{% endif %}
-          <span>RHAIE {{ plugin.rhoai_versions | join(', ') }}</span>
-          <span>{{ plugin.deployment_model | replace('-', ' ') | title }}</span>
+          {% if plugin.rhoai_versions %}<span>RHAIE {{ plugin.rhoai_versions | join(', ') }}</span>{% endif %}
+          {% if plugin.deployment_model %}<span>{{ plugin.deployment_model | replace('-', ' ') | title }}</span>{% endif %}
         </div>
 
         {% if plugin.helm_install %}

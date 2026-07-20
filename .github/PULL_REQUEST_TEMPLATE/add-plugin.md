@@ -1,19 +1,20 @@
 ## New Plugin Submission
 
-**Plugin name**: 
-**Plugin repo**: 
-**Deployment model**: per-project / cluster-shared
+**Plugin name**:
+**Plugin repo**:
 
 ### Checklist
 
-- [ ] Added entry to `plugins.yaml` with all required fields
+- [ ] Added entry to `plugins.yaml` with all required fields (name, repo, status, maintenance, last_updated)
 - [ ] Plugin repo has required structure (`plugin.yaml`, `chart/`, `docs/`)
+- [ ] `plugin.yaml` has all required fields (see [plugin spec](../../docs/plugin-spec.md))
 - [ ] README exists with screenshots and installation guide
 - [ ] RHOAI version compatibility declared in `plugin.yaml` (`rhoai_compatibility.tested_versions` is non-empty)
-- [ ] `rhoai_versions` in `plugins.yaml` matches `tested_versions` in `plugin.yaml`
+- [ ] `remote` section present in `plugin.yaml` for dashboard integration
+- [ ] `install` section present in `plugin.yaml` with `method`, `helm.chart_path`, and `helm.registry`
 - [ ] Helm chart included and `helm template` succeeds
 - [ ] RBAC requirements declared in `plugin.yaml`
-- [ ] Maintainer contact provided
+- [ ] Maintainer contact provided in `plugin.yaml`
 - [ ] License is Apache-2.0
 - [ ] Containers run as non-root (UID 1001+)
 - [ ] No ClusterRole bindings (or justification provided below)

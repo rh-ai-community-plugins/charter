@@ -16,6 +16,7 @@ The `charter` repo is the home for the Red Hat AI Enterprise (RHAIE) Community P
 ## Key Decisions
 
 ### Repo Scope
+
 - **What this repo contains**: Documentation (charter, guidelines) + registry/catalog of plugins
 - **What lives elsewhere**:
   - Technical integration layer (how plugins load) → RHAIE core product
@@ -23,22 +24,27 @@ The `charter` repo is the home for the Red Hat AI Enterprise (RHAIE) Community P
   - Individual plugins → their own repos in `rh-ai-community-plugins` org
 
 ### Registry Format
+
 **Decision**: Structured YAML + auto-generated GitHub Pages site
+
 - `plugins.yaml` contains structured data (name, repo, description, icon, version, status)
 - CI auto-generates a GitHub Pages site from the YAML
 - Both humans (browse site) and potentially RHAIE dashboard (consume YAML) can use it
 
 ### Plugin Discovery (deferred)
+
 Dashboard integration mechanism to be discussed with dashboard specialist later. For now, will "hack" the dashboard to demo plugins before proper integration exists.
 
 ## Core vs Community Boundaries
 
 ### Core RHAIE Keeps
+
 - Stable AI platform primitives with support SLAs
 - Workbenches, pipelines, model serving, MaaS
 - Foundation Red Hat supports, tests, documents, and maintains
 
 ### Community Plugins Are
+
 - Integrations (LLM playgrounds, vector DBs, monitoring dashboards)
 - Experiments (new notebook types, custom accelerators)
 - Vendor plugins (W&B, MLflow UI)
@@ -50,6 +56,7 @@ Dashboard integration mechanism to be discussed with dashboard specialist later.
 This charter is primarily a leadership proposal — designed to get formal backing and resources from Red Hat leadership. Once approved, it becomes the contributor-facing governance document.
 
 **Success criteria (6-month horizon)**:
+
 - Leadership approval and formal backing
 - 3+ community plugins live and usable on a real RHAIE instance
 - Compelling demo at a Red Hat event or customer meeting
@@ -57,30 +64,36 @@ This charter is primarily a leadership proposal — designed to get formal backi
 ## Acceptance Criteria
 
 ### Required
+
 - Open source under the Apache-2.0 license
 - Basic docs (README with screenshots + install YAML)
 - Declared RHAIE version compatibility
 - Maintainer contact
 
 ### Strongly Recommended
+
 - Security scanned
 - Non-root containers
 - UBI9 base images (OpenShift best practices)
 
 ### Allowed
+
 - Anyone can submit (Red Hat, partners, individuals)
 - Commercial plugins allowed if source is open (can phone home to vendor services)
 
 ## Technical Standards
 
 ### Plugin Metadata
+
 Track in catalog:
+
 - Status (experimental/beta/stable-candidate/deprecated/archived)
 - RHAIE version compatibility
 - Maintenance level (red-hat/community/archived)
 - Last updated date
 
 Example:
+
 ```yaml
 - name: brewet
   status: beta
@@ -90,14 +103,18 @@ Example:
 ```
 
 ### RBAC Model
+
 **Decision**: User/group-based via OpenShift RBAC
+
 - Admin installs plugin cluster-wide
 - Grants access to specific users/groups
 - Dashboard filters left nav based on user's permissions
 - Plugins handle their own multi-tenancy (approach TBD — not prescribed; best practices will emerge as the ecosystem matures)
 
 ### Contribution Workflow
+
 **Decision**: Self-service PR with approval
+
 - Plugin maintainer opens PR adding entry to `plugins.yaml`
 - PR template enforces required fields
 - CI validates schema, checks links, runs security scans
@@ -105,8 +122,10 @@ Example:
 - Approved PRs auto-deploy to GitHub Pages catalog
 
 ### Required Repo Structure
+
 Each plugin repo must have:
-```
+
+```text
 plugin-repo/
 ├── plugin.yaml           # Metadata: name, icon, description, nav config
 ├── deploy/
@@ -124,6 +143,7 @@ plugin-repo/
 ### plugin.yaml Fields
 
 **Required**:
+
 - name, version, description
 - maintainer (email/GitHub)
 - RHAIE compatibility
@@ -132,6 +152,7 @@ plugin-repo/
 - Scoping (project-scoped vs cluster-scoped)
 
 **Optional**:
+
 - Dependencies
 - Resource limits
 - Telemetry opt-in
@@ -139,6 +160,7 @@ plugin-repo/
 - Screenshots
 
 ### Deployment Model
+
 **Decision**: Plugin declares its deployment model in `plugin.yaml`
 
 Field: `deployment_model: per-project | cluster-shared | both`
@@ -149,10 +171,12 @@ A single plugin can support both models. When set to `both`, the Helm chart acce
 - **Cluster-shared plugins**: Admin runs Helm install once → plugin appears in left nav for authorized users
 
 Examples:
+
 - OpenShell: per-project (3 instances in different projects)
 - LibreChat: cluster-shared (single pod for 124 users)
 
 ### Security & Isolation
+
 **Decision**: Strict namespace isolation + no elevated privileges
 
 - Per-project plugins run in user's namespace with user's ServiceAccount
@@ -167,32 +191,33 @@ Examples:
 These are the first batch to validate the model:
 
 1. **Brewet** (formerly ODH TEC)
-   - Repo: https://github.com/rh-aiservices-bu/odh-tec
+   - Repo: <https://github.com/rh-aiservices-bu/odh-tec>
    - Will be renamed to "brewet"
    - Owner: rh-aiservices-bu
 
 2. **Sardeenz**
-   - Repo: https://github.com/rh-aiservices-bu/sardeenz
+   - Repo: <https://github.com/rh-aiservices-bu/sardeenz>
    - Owner: rh-aiservices-bu
 
 3. **Hermes**
-   - Repo: https://github.com/aicatalyst-team/hermes-openshift
+   - Repo: <https://github.com/aicatalyst-team/hermes-openshift>
    - Owner: aicatalyst-team
 
 4. **GPU Booking App**
-   - Repo: https://github.com/rhai-code/gpu-booking-app-plugin
+   - Repo: <https://github.com/rhai-code/gpu-booking-app-plugin>
    - Owner: rhai-code
 
 5. **OpenShift Skills**
-   - Repo: https://github.com/rhai-code/rhai-openshift-skills-plugin
+   - Repo: <https://github.com/rhai-code/rhai-openshift-skills-plugin>
    - Owner: rhai-code
 
 6. **Quickstart Launcher** (new)
-   - Will deploy quickstarts from: https://github.com/rh-ai-quickstart/
+   - Will deploy quickstarts from: <https://github.com/rh-ai-quickstart/>
    - Deploys into user-level project
    - Needs to be built from scratch
 
 ### Conversion Ownership
+
 - **Erwan's team converts**: Brewet, Sardeenz (direct control, use as reference implementations)
 - **Build from scratch**: Quickstart Launcher (3rd reference implementation)
 - **External teams convert**: Hermes (aicatalyst-team), GPU Booking + Skills (rhai-code)
@@ -201,6 +226,7 @@ These are the first batch to validate the model:
 ## Tracking Metrics
 
 Internally, Red Hat will track:
+
 - Plugin utilization/adoption
 - Usage patterns
 - Feature popularity

@@ -24,6 +24,7 @@ image:
 - **Non-root containers**: Run as UID 1001+. Never use `runAsUser: 0`.
 - **UBI9 base images**: Preferred. If not UBI9, document why.
 - **Security context**:
+
   ```yaml
   securityContext:
     runAsNonRoot: true
@@ -31,12 +32,13 @@ image:
     readOnlyRootFilesystem: true
     allowPrivilegeEscalation: false
   ```
+
 - **Resource limits**: Always set requests and limits in `values.yaml`.
 - **Port 8080**: Use non-privileged ports (8080, 8443). Never bind to ports below 1024.
 
 ## Chart Structure
 
-```
+```text
 chart/
 ├── Chart.yaml
 ├── values.yaml
@@ -52,6 +54,7 @@ chart/
 ## Testing
 
 Before submitting, verify:
+
 1. `helm template . | oc apply --dry-run=client -f -` succeeds
 2. `helm install` and `helm uninstall` leave no orphaned resources
 3. The plugin works with every version listed in `rhoai_compatibility.tested_versions`
@@ -59,6 +62,7 @@ Before submitting, verify:
 ### Ongoing Compatibility
 
 When RHOAI release candidates are announced:
+
 1. Run your Helm chart validation against the RC
 2. Test the plugin UI in the RHOAI dashboard
-3. Update `tested_versions` in your `plugin.yaml` and `rhoai_versions` in `plugins.yaml` via PR
+3. Update `tested_versions` in your `plugin.yaml` via PR

@@ -64,18 +64,23 @@ If it needs to be in core to work, it's not a community plugin.
 Plugins progress through these states:
 
 ### Experimental
+
 New plugins start here. Expect breaking changes, incomplete features, possible deprecation. Use at your own risk.
 
 ### Beta
+
 Stabilizing. API may still change, but maintainers commit to migration paths. Suitable for non-critical workloads.
 
 ### Stable-Candidate
+
 Mature and reliable. Maintainers commit to backward compatibility and deprecation notices. Suitable for critical workloads if you accept the community support model. Adoption into RHAIE core is possible but rare — this status primarily signals maturity, not a pipeline to product inclusion.
 
 ### Deprecated
+
 No longer recommended. Security fixes only. Maintainers must give 90 days notice before moving to archived.
 
 ### Archived
+
 No longer maintained. Remains in catalog for historical reference but is not installable. No support, no updates.
 
 ## Support Model
@@ -118,6 +123,7 @@ Removed plugins get 90-day deprecation notice unless they pose immediate securit
 ### Conflict Resolution
 
 If two plugins provide overlapping functionality:
+
 - Both can coexist if clearly differentiated
 - Users and admins choose which to use
 - Red Hat does not pick winners; market adoption decides

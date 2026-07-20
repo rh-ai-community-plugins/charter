@@ -1,104 +1,19 @@
 # Red Hat AI Community Plugins Registry
 #
+# This is a lightweight registry. All plugin metadata (description, version,
+# compatibility, etc.) lives in each plugin's own plugin.yaml.
 # To add a plugin, open a PR adding an entry below.
 # See CONTRIBUTING.md for submission guidelines.
-# See docs/plugin-spec.md for the full plugin.yaml schema.
-#
-# Optional fields: version, icon_url, tagline, helm_install
-# These are validated when present but not required.
 
 plugins:
-  - name: brewet
-    description: Technical enablement catalog and demos
-    tagline: Hands-on AI enablement, ready to run
-    repo: https://github.com/rh-aiservices-bu/odh-tec
-    status: experimental
-    maintenance: red-hat
-    deployment_model: cluster-shared
-    rhoai_versions: ["3.4.0"]
-    maintainer: rh-aiservices-bu
-    last_updated: 2026-06-24
-    version: "0.1.0"
-    helm_install: helm install brewet oci://quay.io/rh-ai-community-plugins/brewet-chart
-    screenshot_url: screenshots/brewet.png
-
-  - name: sardeenz
-    description: Specialized visualization tools
-    tagline: See your AI workloads differently
-    repo: https://github.com/rh-aiservices-bu/sardeenz
-    status: experimental
-    maintenance: red-hat
-    deployment_model: cluster-shared
-    rhoai_versions: ["3.4.0"]
-    maintainer: rh-aiservices-bu
-    last_updated: 2026-06-24
-    version: "0.1.0"
-    helm_install: helm install sardeenz oci://quay.io/rh-ai-community-plugins/sardeenz-chart
-    screenshot_url: screenshots/sardeenz.png
-
-  - name: hermes
-    description: Deploy and configure Hermes Agent on OpenShift
-    tagline: Your AI agent, one click away
-    repo: https://github.com/aicatalyst-team/hermes-openshift
+  - name: hello-world
+    repo: https://github.com/rh-ai-community-plugins/hello-world
     status: experimental
     maintenance: community
-    deployment_model: per-project
-    rhoai_versions: ["3.4.0"]
-    maintainer: aicatalyst-team
-    last_updated: 2026-06-24
-    version: "0.1.0"
-    helm_install: helm install hermes oci://quay.io/rh-ai-community-plugins/hermes-chart
-    screenshot_url: screenshots/hermes.png
-
-  - name: gpu-booking
-    description: GPU resource scheduling and calendar
-    tagline: Book GPUs like meeting rooms
-    repo: https://github.com/rhai-code/gpu-booking-app-plugin
-    status: experimental
-    maintenance: community
-    deployment_model: cluster-shared
-    rhoai_versions: ["3.4.0"]
-    maintainer: rhai-code
-    last_updated: 2026-06-24
-    version: "0.1.0"
-    helm_install: helm install gpu-booking oci://quay.io/rh-ai-community-plugins/gpu-booking-chart
-    screenshot_url: screenshots/gpu-booking.png
-
-  - name: openshift-skills
-    description: AI-powered cluster operations
-    tagline: Let AI handle the YAML
-    repo: https://github.com/rhai-code/rhai-openshift-skills-plugin
-    status: experimental
-    maintenance: community
-    deployment_model: per-project
-    rhoai_versions: ["3.4.0"]
-    maintainer: rhai-code
-    last_updated: 2026-06-24
-    version: "0.1.0"
-    helm_install: helm install openshift-skills oci://quay.io/rh-ai-community-plugins/openshift-skills-chart
-
-  - name: quickstart-launcher
-    description: One-click deployment of quickstart templates
-    tagline: From zero to demo in minutes
-    repo: https://github.com/rh-ai-quickstart/quickstart-launcher
-    status: experimental
-    maintenance: red-hat
-    deployment_model: per-project
-    rhoai_versions: ["3.4.0"]
-    maintainer: rh-aiservices-bu
-    last_updated: 2026-06-24
-    version: "0.1.0"
-    helm_install: helm install quickstart-launcher oci://quay.io/rh-ai-community-plugins/quickstart-launcher-chart
+    last_updated: 2026-07-16
 
   - name: kueue-visualizer
-    description: Visualize Kueue workload scheduling, queue topology, and capacity
-    tagline: See your queues at a glance
     repo: https://github.com/rh-ai-community-plugins/kueue-visualizer
     status: experimental
     maintenance: community
-    deployment_model: cluster-shared
-    rhoai_versions: ["3.4.0"]
-    maintainer: rh-ai-community-plugins
-    last_updated: 2026-07-03
-    version: "0.1.0"
-    helm_install: helm install kueue-visualizer oci://quay.io/rh-ai-community-plugins/kueue-visualizer-chart
+    last_updated: 2026-07-20
