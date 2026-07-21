@@ -17,3 +17,10 @@ plugins:
     status: experimental
     maintenance: community
     last_updated: 2026-07-20
+
+  - name: apache-superset
+    repo: https://github.com/rh-ai-community-plugins/apache-superset
+    status: experimental
+    maintenance: community
+    last_updated: 2026-07-21
+    
