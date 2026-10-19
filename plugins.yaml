@@ -37,7 +37,7 @@ plugins:
     last_updated: 2026-10-16
 
   - name: gpu-booking
-    repo: https://github.com/rh-ai-community-plugins/gpu-booking-plugin
+    repo: https://github.com/rh-ai-community-plugins/gpu-booking
     status: experimental
     maintenance: community
     last_updated: 2026-10-16
