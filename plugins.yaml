@@ -36,12 +36,6 @@ plugins:
     maintenance: community
     last_updated: 2026-10-16
 
-  - name: gpu-booking
-    repo: https://github.com/rh-ai-community-plugins/gpu-booking
-    status: experimental
-    maintenance: community
-    last_updated: 2026-10-16
-
   - name: apache-superset
     repo: https://github.com/rh-ai-community-plugins/apache-superset
     status: experimental
