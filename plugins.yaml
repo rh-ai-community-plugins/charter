@@ -30,6 +30,12 @@ plugins:
     maintenance: community
     last_updated: 2026-07-20
 
+  - name: maaspal
+    repo: https://github.com/rh-ai-community-plugins/maaspal
+    status: experimental
+    maintenance: community
+    last_updated: 2026-10-16
+
   - name: apache-superset
     repo: https://github.com/rh-ai-community-plugins/apache-superset
     status: experimental
