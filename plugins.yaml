@@ -42,8 +42,8 @@ plugins:
     maintenance: community
     last_updated: 2026-07-21
 
-  - name: community-plugins-admin
-    repo: https://github.com/rh-ai-community-plugins/community-plugins-admin
+  - name: community-plugins-catalog
+    repo: https://github.com/rh-ai-community-plugins/community-plugins-catalog
     status: experimental
     maintenance: community
     last_updated: 2026-08-10
